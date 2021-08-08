@@ -39,6 +39,7 @@ module.exports = grammar({
         $.addition_operator,
         $.multiplication_operator,
         $.prefix_operator,
+        $.suffix_operator,
 
         $.identifier_list,
         $.switch_prong_list,
