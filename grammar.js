@@ -3,6 +3,7 @@
 const BASIC_TYPES = require('./grammar/basic-types.js');
 
 const PREC = {
+    STATEMENT: 1,
     ASSIGNMENT_EXPRESSION: 0,
     BOOLEAN_OR_EXPRESSION: 1,
     BOOLEAN_AND_EXPRESSION: 2,
@@ -217,7 +218,7 @@ module.exports = grammar({
          *      / SwitchExpr
          *      / AssignExpr SEMICOLON
          */
-        statement: $ => choice(
+        statement: $ => prec(PREC.STATEMENT, choice(
             seq(
                 optional('comptime'),
                 $.variable_declaration,
@@ -229,7 +230,7 @@ module.exports = grammar({
                 $._expression,
                 ';',
             ),
-        ),
+        )),
         // if_statement: $ => seq(
         // labeled_statement: $ => seq(
         // loop_statement: $ => seq(
