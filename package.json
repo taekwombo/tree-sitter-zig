@@ -1,19 +1,26 @@
 {
-  "name": "tree-sitter-zig",
-  "version": "0.0.1",
-  "description": "zig grammar for tree-sitter",
-  "main": "bindings/node",
-  "keywords": [
-    "parsing",
-    "incremental"
-  ],
-  "dependencies": {
-    "nan": "^2.12.1"
-  },
-  "devDependencies": {
-    "tree-sitter-cli": "^0.20.0"
-  },
-  "scripts": {
-    "test": "tree-sitter test"
-  }
+    "name": "tree-sitter-zig",
+    "version": "0.0.1",
+    "description": "zig grammar for tree-sitter",
+    "main": "bindings/node",
+    "keywords": [
+        "tree-sitter",
+        "grammar",
+        "parsing",
+        "incremental"
+    ],
+    "dependencies": {
+        "nan": "^2.12.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12",
+        "tree-sitter-cli": "^0.20.0"
+    },
+    "scripts": {
+        "build": "tree-sitter generate",
+        "build:wasm": "npm run build && tree-sitter build-wasm",
+        "start": "npm run build:wasm && tree-sitter web-ui",
+        "test": "tree-sitter test",
+        "test:watch": "nodemon --ext js,txt --watch grammar.js --watch test --watch queries --exec 'npm run build && npm run test'"
+    }
 }

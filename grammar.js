@@ -1,813 +1,1152 @@
-const AMPERSAND = "&",
-  AMPERSANDEQUAL = "&=",
-  ASTERISK = "*",
-  ASTERISK2 = "**",
-  ASTERISKEQUAL = "*=",
-  ASTERISKPERCENT = "*%",
-  ASTERISKPERCENTEQUAL = "*%=",
-  CARET = "^",
-  CARETEQUAL = "^=",
-  COLON = ":",
-  COMMA = ",",
-  DOT = ".",
-  DOT2 = "..",
-  DOT3 = "...",
-  DOTASTERISK = ".*",
-  DOTQUESTIONMARK = ".?",
-  EQUAL = "=",
-  EQUALEQUAL = "==",
-  EQUALRARROW = "=>",
-  EXCLAMATIONMARK = "!",
-  EXCLAMATIONMARKEQUAL = "!=",
-  LARROW = "<",
-  LARROW2 = "<<",
-  LARROW2EQUAL = "<<=",
-  LARROWEQUAL = "<=",
-  LBRACE = "{",
-  LBRACKET = "[",
-  LPAREN = "(",
-  MINUS = "-",
-  MINUSEQUAL = "-=",
-  MINUSPERCENT = "-%",
-  MINUSPERCENTEQUAL = "-%=",
-  MINUSRARROW = "->",
-  PERCENT = "%",
-  PERCENTEQUAL = "%=",
-  PIPE = "|",
-  PIPE2 = "||",
-  PIPEEQUAL = "|=",
-  PLUS = "+",
-  PLUS2 = "++",
-  PLUSEQUAL = "+=",
-  PLUSPERCENT = "+%",
-  PLUSPERCENTEQUAL = "+%=",
-  LETTERC = "c",
-  QUESTIONMARK = "?",
-  RARROW = ">",
-  RARROW2 = ">>",
-  RARROW2EQUAL = ">>=",
-  RARROWEQUAL = ">=",
-  RBRACE = "}",
-  RBRACKET = "]",
-  RPAREN = ")",
-  SEMICOLON = ";",
-  SLASH = "/",
-  SLASHEQUAL = "/=",
-  TILDE = "~",
-  buildin_type = [
-    "isize",
-    "usize",
-    "c_short",
-    "c_ushort",
-    "c_int",
-    "c_uint",
-    "c_long",
-    "c_ulong",
-    "c_longlong",
-    "c_ulonglong",
-    "c_longdouble",
-    "c_void",
-    "f16",
-    "f32",
-    "f64",
-    "f128",
-    "comptime_int",
-    "comptime_float",
-    "bool",
-    "void",
-    "noreturn",
-    "type",
-    "anyerror",
-    /(i|u)[0-9]+/,
-  ],
-  bin = /[01]/,
-  bin_ = seq(optional("_"), bin),
-  oct = /[0-7]/,
-  oct_ = seq(optional("_"), oct),
-  hex = /[0-9a-fA-F]/,
-  hex_one_or_more = /[0-9a-fA-F]+/,
-  hex_ = seq(optional("_"), hex),
-  dec = /[0-9]/,
-  dec_ = seq(optional("_"), dec),
-  bin_int = seq(bin, repeat(bin_)),
-  oct_int = seq(oct, repeat(oct_)),
-  dec_int = seq(dec, repeat(dec_)),
-  hex_int = seq(hex, repeat(hex_)),
-  // ox80_oxBF = /[\200-\277]/,
-  // oxF4 = "\364",
-  // ox80_ox8F = /[\200-\217]/,
-  // oxF1_oxF3 = /[\361-\363]/,
-  // oxF0 = "\360",
-  // ox90_0xBF = /[\220-\277]/,
-  // oxEE_oxEF = /[\356-\357]/,
-  // oxED = "\355",
-  // oxE1_oxEC = /[\341-\354]/,
-  // ox80_ox9F = /[\200-\237]/,
-  // oxE0 = "\340",
-  // oxA0_oxBF = /[\240-\277]/,
-  // oxC2_oxDF = /[\302-\337]/,
-  // mb_utf8_literal = choice(
-  //   seq(oxF4, ox80_ox8F, ox80_oxBF, ox80_oxBF),
-  //   seq(oxF1_oxF3, ox80_oxBF, ox80_oxBF, ox80_oxBF),
-  //   seq(oxF0, ox90_0xBF, ox80_oxBF, ox80_oxBF),
-  //   seq(oxEE_oxEF, ox80_oxBF, ox80_oxBF),
-  //   seq(oxED, ox80_ox9F, ox80_oxBF),
-  //   seq(oxE1_oxEC, ox80_oxBF, ox80_oxBF),
-  //   seq(oxE0, oxA0_oxBF, ox80_oxBF),
-  //   seq(oxC2_oxDF, ox80_oxBF)
-  // ),
-  // ascii_char_not_nl_slash_squote = /[\000-\011\013-\046-\050-\133\135-\177]/,
-  char_escape = choice(
-    seq("\\x", hex, hex),
-    seq("\\u{", hex_one_or_more, "}"),
-    seq("\\", /[nr\\t'"]/)
-  ),
-  char_char = choice(
-    //   mb_utf8_literal,
-    char_escape,
-    /./
-    // ascii_char_not_nl_slash_squote
-  ),
-  string_char = choice(char_escape, /[^\\"\n]/),
-  line_string = repeat1(seq("\\\\", /[^\n]*/, /[ \n]*/));
+'use strict';
+
+const BASIC_TYPES = require('./grammar/basic-types.js');
+
+const PREC = {
+    ASSIGNMENT_EXPRESSION: 0,
+    BOOLEAN_OR_EXPRESSION: 1,
+    BOOLEAN_AND_EXPRESSION: 2,
+    COMPARISON_EXPRESSION: 3,
+    BITWISE_EXPRESSION: 4,
+    BIT_SHIFT_EXPRESSION: 5,
+    ADDITION_EXPRESSION: 6,
+    MULTIPLICATION_EXPRESSION: 7,
+    PREFIX_EXPRESSION: 8,
+    _: 9,
+    __: 10,
+    SUFFIX_EXPRESSION: 11,
+};
 
 module.exports = grammar({
-  name: "zig",
+    name: 'zig',
 
-  externals: (_) => [],
-  // word: ($) => $._identifier_text,
+    extras: $ => [
+        /\s/,
+        $.comment,
+    ],
 
-  extras: ($) => [/\s/, $.line_comment],
-  conflicts: ($) => [
-    [$._PrimaryExpr, $.LabeledStatement],
-    [$._Statement, $._PrimaryTypeExpr],
-    [$._CurlySuffixExpr, $._PrimaryTypeExpr],
-    [$._CurlySuffixExpr, $.IfTypeExpr],
-    [$._CurlySuffixExpr, $.WhileTypeExpr],
-    [$._CurlySuffixExpr, $.ForTypeExpr],
-    [$.AssignExpr, $._PrimaryExpr],
-    [$.BlockExpr, $._PrimaryExpr],
-    [$.LabeledStatement, $.LabeledTypeExpr],
-    [$.AssignExpr, $.IfExpr],
-    [$.AssignExpr, $.WhileExpr],
-    [$.AssignExpr, $.ForExpr],
-    [$.ParamType, $._PrimaryTypeExpr],
-    [$.BlockExpr, $.LabeledTypeExpr],
-  ],
+    inline: $ => [
+        $.container_members,
+        $.container_declarations,
+        // $.top_level_declaration,
 
-  rules: {
-    source_file: ($) =>
-      seq(optional($.container_doc_comment), repeat($._ContainerMembers)),
+        $.primary_expression,
 
-    // *** Top level ***
-    _ContainerMembers: ($) =>
-      prec.left(
-        choice($._ContainerDeclarations, sepBy1(COMMA, $.ContainerField))
-      ),
+        $.assignment_operator,
+        $.comparison_operator,
+        $.bitwise_operator,
+        $.bit_shift_operator,
+        $.addition_operator,
+        $.multiplication_operator,
+        $.prefix_operator,
 
-    _ContainerDeclarations: ($) =>
-      choice(
-        $.TestDecl,
-        $.TopLevelComptime,
-        seq(
-          optional($.doc_comment),
-          optional(keyword("pub", $)),
-          $._TopLevelDecl
-        )
-      ),
+        $.identifier_list,
+        $.switch_prong_list,
+        $.assembly_input_list,
+        $.assembly_output_list,
+        $.string_list,
+        $.parameter_declaration_list,
+        $.expression_list,
 
-    TestDecl: ($) =>
-      seq(
-        optional($.doc_comment),
-        keyword("test", $),
-        optional($.STRINGLITERALSINGLE),
-        $.Block
-      ),
+        $.literal,
+        $.mb_utf8_literal,
+        $.string_character,
+        $.string_literal_multiline,
+        $.string_literal_singleline,
+    ],
 
-    TopLevelComptime: ($) =>
-      seq(optional($.doc_comment), keyword("comptime", $), $.BlockExpr),
+    rules: {
+        // TODO
+        root: $ => repeat($.container_members),
 
-    _TopLevelDecl: ($) =>
-      prec.left(
-        choice(
-          keyword("export", $),
-          seq(keyword("extern", $), optional($.STRINGLITERALSINGLE)),
-          seq(
-            optional(keyword(choice("inline", "noinline"), $)),
-            $.FnProto,
-            choice(SEMICOLON, $.Block)
-          ),
-          seq(
-            optional(
-              choice(
-                keyword("export", $),
-                seq(keyword("extern", $), optional($.STRINGLITERALSINGLE))
-              )
+        /*
+         * ContainerMembers <- ContainerDeclarations (ContainerField COMMA)* (ContainerField / ContainerDeclarations)
+         */
+        container_members: $ => seq(
+            $.container_declarations,
+            repeat(seq(
+                $.container_field,
+                ',',
+            )),
+            choice(
+                $.container_field,
+                $.container_declarations,
             ),
-            optional(keyword("threadlocal", $)),
-            $.VarDecl
-          ),
-          seq(keyword("usingnamespace", $), $._Expr, SEMICOLON)
-        )
-      ),
-
-    FnProto: ($) =>
-      seq(
-        keyword("fn", $),
-        optional($.IDENTIFIER),
-        $.ParamDeclList,
-        optional($.ByteAlign),
-        optional($.LinkSection),
-        optional($.CallConv),
-        optional(EXCLAMATIONMARK),
-        field("return_type", $._TypeExpr)
-      ),
-
-    VarDecl: ($) =>
-      seq(
-        keyword(choice("const", "var"), $),
-        $.IDENTIFIER,
-        optional(seq(COLON, $._TypeExpr)),
-        optional($.ByteAlign),
-        optional($.LinkSection),
-        optional(seq(EQUAL, $._Expr)),
-        SEMICOLON
-      ),
-
-    ContainerField: ($) =>
-      seq(
-        optional($.doc_comment),
-        optional(keyword("comptime", $)),
-        $.IDENTIFIER,
-        optional(
-          seq(
-            COLON,
-            choice(keyword("anytype", $), $._TypeExpr),
-            optional($.ByteAlign)
-          )
         ),
-        optional(seq(EQUAL, $._Expr))
-      ),
-
-    // *** Block Level ***
-
-    _Statement: ($) =>
-      choice(
-        seq(optional(keyword("comptime", $)), $.VarDecl),
-        seq(
-          choice(
-            keyword(choice("comptime", "nosuspend", "defer", "suspend"), $),
-            seq(keyword("errdefer", $), optional($.Payload))
-          ),
-          $.BlockExprStatement
+        /*
+         * ContainerDeclarations
+         *     <- TestDecl ContainerDeclarations
+         *      / TopLevelComptime ContainerDeclarations
+         *      / doc_comment? KEYWORD_pub? TopLevelDecl ContainerDeclarations
+         */
+        container_declarations: $ => choice(
+            $.test_declaration,
+            $.top_level_comptime,
+            seq(
+                optional('pub'),
+                $.top_level_declaration,
+            ),
         ),
-        $.IfStatement,
-        $.LabeledStatement,
-        $.SwitchExpr,
-        seq($.AssignExpr, SEMICOLON)
-      ),
+        /*
+         * TestDecl <- doc_comment? KEYWORD_test STRINGLITERALSINGLE? Block
+         */
+        test_declaration: $ => seq(
+            'test',
+            $.string_literal_singleline,
+            $.block,
+        ),
 
-    IfStatement: ($) =>
-      choice(
-        seq($.IfPrefix, $.BlockExpr, optional($._ElseStatementTail)),
-        seq($.IfPrefix, $.AssignExpr, choice(SEMICOLON, $._ElseStatementTail))
-      ),
-    _ElseStatementTail: ($) =>
-      seq(keyword("else", $), optional($.Payload), $._Statement),
+        /*
+         * TopLevelComptime <- doc_comment? KEYWORD_comptime BlockExpr
+         */
+        top_level_comptime: $ => seq(
+            'comptime',
+            // TODO naming
+            $.block_expression,
+        ),
 
-    LabeledStatement: ($) =>
-      seq(optional($.BlockLabel), choice($.Block, $.LoopStatement)),
-
-    LoopStatement: ($) =>
-      seq(
-        optional(keyword("inline", $)),
-        choice($.ForStatement, $.WhileStatement)
-      ),
-
-    ForStatement: ($) =>
-      choice(
-        seq($.ForPrefix, $.BlockExpr, optional($._ElseStatementTail)),
-        seq($.ForPrefix, $.AssignExpr, choice(SEMICOLON, $._ElseStatementTail))
-      ),
-
-    WhileStatement: ($) =>
-      choice(
-        seq($.WhilePrefix, $.BlockExpr, optional($._ElseStatementTail)),
-        seq(
-          $.WhilePrefix,
-          $.AssignExpr,
-          choice(SEMICOLON, $._ElseStatementTail)
-        )
-      ),
-
-    BlockExprStatement: ($) =>
-      choice($.BlockExpr, seq($.AssignExpr, SEMICOLON)),
-
-    BlockExpr: ($) => seq(optional($.BlockLabel), $.Block),
-
-    // *** Expression Level ***
-
-    AssignExpr: ($) => seq($._Expr, optional(seq($.AssignOp, $._Expr))),
-
-    _Expr: ($) => choice($.BinaryExpr, $.UnaryExpr, $._PrimaryExpr),
-
-    BinaryExpr: ($) => {
-      const PREC = {
-        or: 1,
-        and: 2,
-        comparative: 3,
-        bitwise: 4,
-        bitshift: 5,
-        addition: 6,
-        multiply: 7,
-        prefix: 8,
-      };
-      const table = [
-        [PREC.or, "or"],
-        [PREC.and, "and"],
-        [PREC.comparative, $.CompareOp],
-        [PREC.bitwise, $.BitwiseOp],
-        [PREC.bitshift, $.BitShiftOp],
-        [PREC.addition, $.AdditionOp],
-        [PREC.multiply, $.MultiplyOp],
-      ];
-
-      return choice(
-        ...table.map(([precedence, operator]) =>
-          prec.left(
-            precedence,
-            seq(
-              field("left", $._Expr),
-              field("operator", operator),
-              field("right", $._Expr)
-            )
-          )
-        )
-      );
-    },
-    UnaryExpr: ($) =>
-      prec.left(8, seq(field("operator", $.PrefixOp), field("left", $._Expr))),
-
-    _PrimaryExpr: ($) =>
-      prec.left(
-        choice(
-          $.AsmExpr,
-          $.IfExpr,
-          seq(keyword("break", $), optional($.BreakLabel), optional($._Expr)),
-          seq(keyword("continue", $), optional($.BreakLabel)),
-          seq(keyword(choice("comptime", "nosespend", "resume"), $), $._Expr),
-          seq(keyword("return", $), optional($._Expr)),
-          seq(optional($.BlockLabel), $.LoopExpr),
-          $.Block,
-          $._CurlySuffixExpr
-        )
-      ),
-
-    IfExpr: ($) =>
-      prec.left(seq($.IfPrefix, $._Expr, optional($._ElseExprTail))),
-
-    _ElseExprTail: ($) => seq(keyword("else", $), optional($.Payload), $._Expr),
-
-    Block: ($) => seq(LBRACE, repeat($._Statement), RBRACE),
-
-    LoopExpr: ($) =>
-      seq(optional(keyword("inline", $)), choice($.ForExpr, $.WhileExpr)),
-
-    ForExpr: ($) =>
-      prec.left(seq($.ForPrefix, $._Expr, optional($._ElseExprTail))),
-
-    WhileExpr: ($) =>
-      prec.left(seq($.WhilePrefix, $._Expr, optional($._ElseExprTail))),
-
-    _CurlySuffixExpr: ($) =>
-      choice(seq(field("constructor", $._TypeExpr), $.InitList), $._TypeExpr),
-
-    InitList: ($) =>
-      choice(
-        seq(LBRACE, sepBy1(COMMA, $.FieldInit), RBRACE),
-        seq(LBRACE, sepBy1(COMMA, $._Expr), RBRACE),
-        seq(LBRACE, RBRACE)
-      ),
-
-    _TypeExpr: ($) => seq(repeat($.PrefixTypeOp), $._ErrorUnionExpr),
-
-    _ErrorUnionExpr: ($) =>
-      prec.left(seq($.SuffixExpr, optional(seq(EXCLAMATIONMARK, $._TypeExpr)))),
-
-    SuffixExpr: ($) =>
-      prec.left(
-        seq(
-          optional(keyword("async", $)),
-          choice(
-            seq(field("function", $._PrimaryTypeExpr), $.FnCallArguments),
-            seq(
-              $._PrimaryTypeExpr,
-              repeat(
+        /*
+         * TopLevelDecl
+         *     <- (KEYWORD_export / KEYWORD_extern STRINGLITERALSINGLE? / (KEYWORD_inline / KEYWORD_noinline))? FnProto (SEMICOLON / Block)
+         *      / (KEYWORD_export / KEYWORD_extern STRINGLITERALSINGLE?)? KEYWORD_threadlocal? VarDecl
+         *      / KEYWORD_usingnamespace Expr SEMICOLON
+         */
+        top_level_declaration: $ => choice(
+            $.top_function_declaration,
+            $.top_variable_declaration,
+            $.top_usingnamespace_declaration,
+        ),
+        top_function_declaration: $ => seq(
+            optional(choice(
+                'export',
+                $.extern_ref,
                 choice(
-                  field("field", $.SuffixOp),
-                  seq(field("function", $.SuffixOp), $.FnCallArguments)
-                )
-              )
-            )
-          )
-        )
-      ),
-
-    // _Literal: ($) => choice($.CHAR_LITERAL, $.FLOAT, $.INTEGER, $.STRINGLITERAL),
-
-    _PrimaryTypeExpr: ($) =>
-      prec.left(
-        choice(
-          seq($.BUILTINIDENTIFIER, $.FnCallArguments),
-          $.CHAR_LITERAL,
-          $.ContainerDecl,
-          seq(DOT, $.IDENTIFIER),
-          seq(DOT, $.InitList),
-          $.ErrorSetDecl,
-          $.FLOAT,
-          $.FnProto,
-          $.GroupedExpr,
-          $.LabeledTypeExpr,
-          $.IDENTIFIER,
-          $.IfTypeExpr,
-          $.INTEGER,
-          seq(keyword("comptime", $), $._TypeExpr),
-          seq(keyword("error", $), DOT, $.IDENTIFIER),
-          keyword("false", $),
-          keyword("null", $),
-          keyword("anyframe", $),
-          keyword("true", $),
-          keyword("undefined", $),
-          keyword("unreachable", $),
-          $.STRINGLITERAL,
-          $.SwitchExpr,
-          $.BuildinTypeExpr
-        )
-      ),
-    BuildinTypeExpr: (_) => token(choice(...buildin_type)),
-    ContainerDecl: ($) =>
-      seq(
-        optional(keyword(choice("extern", "packed"), $)),
-        $._ContainerDeclAuto
-      ),
-
-    ErrorSetDecl: ($) =>
-      seq(keyword("error", $), LBRACE, $.IdentifierList, RBRACE),
-
-    GroupedExpr: ($) => seq(LPAREN, $._Expr, RPAREN),
-
-    IfTypeExpr: ($) =>
-      prec.left(seq($.IfPrefix, $._TypeExpr, optional($._ElseTypeExprTail))),
-
-    _ElseTypeExprTail: ($) =>
-      seq(keyword("else", $), optional($.Payload), $._TypeExpr),
-
-    LabeledTypeExpr: ($) =>
-      choice(
-        seq($.BlockLabel, $.Block),
-        seq(optional($.BlockLabel), $.LoopTypeExpr)
-      ),
-
-    LoopTypeExpr: ($) =>
-      seq(
-        optional(keyword("inline", $)),
-        choice($.ForTypeExpr, $.WhileTypeExpr)
-      ),
-
-    ForTypeExpr: ($) =>
-      prec.left(seq($.ForPrefix, $._TypeExpr, optional($._ElseTypeExprTail))),
-
-    WhileTypeExpr: ($) =>
-      prec.left(seq($.WhilePrefix, $._TypeExpr, optional($._ElseTypeExprTail))),
-
-    SwitchExpr: ($) =>
-      seq(
-        keyword("switch", $),
-        LPAREN,
-        $._Expr,
-        RPAREN,
-        LBRACE,
-        $.SwitchProngList,
-        RBRACE
-      ),
-
-    // *** Assembly ***
-
-    AsmExpr: ($) =>
-      seq(
-        keyword("asm", $),
-        optional(keyword("volatile", $)),
-        LPAREN,
-        $._Expr,
-        optional($.AsmOutput),
-        RPAREN
-      ),
-
-    AsmOutput: ($) => seq(COLON, $.AsmOutputList, optional($.AsmInput)),
-
-    AsmOutputItem: ($) =>
-      seq(
-        LBRACKET,
-        $.IDENTIFIER,
-        RBRACKET,
-        $.STRINGLITERAL,
-        LPAREN,
-        choice(seq("->", $._TypeExpr), $.IDENTIFIER),
-        RPAREN
-      ),
-
-    AsmInput: ($) => seq(COLON, $.AsmInputList, optional($.AsmClobbers)),
-
-    AsmInputItem: ($) =>
-      seq(
-        LBRACKET,
-        $.IDENTIFIER,
-        RBRACKET,
-        $.STRINGLITERAL,
-        LPAREN,
-        $._Expr,
-        RPAREN
-      ),
-
-    AsmClobbers: ($) => seq(COLON, $.StringList),
-
-    // *** Helper grammar ***
-    BreakLabel: ($) => seq(COLON, $.IDENTIFIER),
-
-    BlockLabel: ($) => prec.left(seq($.IDENTIFIER, COLON)),
-
-    FieldInit: ($) => seq(DOT, $.IDENTIFIER, EQUAL, $._Expr),
-
-    WhileContinueExpr: ($) => seq(COLON, LPAREN, $.AssignExpr, RPAREN),
-
-    LinkSection: ($) => seq(keyword("linksection", $), LPAREN, $._Expr, RPAREN),
-
-    // Fn specific
-    CallConv: ($) => seq(keyword("callconv", $), LPAREN, $._Expr, RPAREN),
-
-    ParamDecl: ($) =>
-      choice(
-        seq(
-          optional($.doc_comment),
-          optional(keyword(choice("noalias", "comptime"), $)),
-          optional(seq($.IDENTIFIER, COLON)),
-          $.ParamType
-        ),
-        DOT3
-      ),
-
-    ParamType: ($) => choice(keyword("anytype", $), $._TypeExpr),
-
-    // Control flow prefixes
-    IfPrefix: ($) =>
-      seq(keyword("if", $), LPAREN, $._Expr, RPAREN, optional($.PtrPayload)),
-
-    WhilePrefix: ($) =>
-      seq(
-        keyword("while", $),
-        LPAREN,
-        $._Expr,
-        RPAREN,
-        optional($.PtrPayload),
-        optional($.WhileContinueExpr)
-      ),
-
-    ForPrefix: ($) =>
-      seq(keyword("for", $), LPAREN, $._Expr, RPAREN, $.PtrIndexPayload),
-
-    // Payloads
-    Payload: ($) => seq(PIPE, $.IDENTIFIER, PIPE),
-
-    PtrPayload: ($) => seq(PIPE, optional(ASTERISK), $.IDENTIFIER, PIPE),
-
-    PtrIndexPayload: ($) =>
-      seq(
-        PIPE,
-        optional(ASTERISK),
-        $.IDENTIFIER,
-        optional(seq(COMMA, $.IDENTIFIER)),
-        PIPE
-      ),
-
-    // Switch specific
-    SwitchProng: ($) =>
-      seq($.SwitchCase, EQUALRARROW, optional($.PtrPayload), $.AssignExpr),
-
-    SwitchCase: ($) => choice(sepBy1(COMMA, $.SwitchItem), keyword("else", $)),
-
-    SwitchItem: ($) => seq($._Expr, optional(seq(DOT3, $._Expr))),
-    AssignOp: (_) =>
-      choice(
-        ASTERISKEQUAL,
-        SLASHEQUAL,
-        PERCENTEQUAL,
-        PLUSEQUAL,
-        MINUSEQUAL,
-        LARROW2EQUAL,
-        RARROW2EQUAL,
-        AMPERSANDEQUAL,
-        CARETEQUAL,
-        PIPEEQUAL,
-        ASTERISKPERCENTEQUAL,
-        PLUSPERCENTEQUAL,
-        MINUSPERCENTEQUAL,
-        EQUAL
-      ),
-    CompareOp: (_) =>
-      choice(
-        EQUALEQUAL,
-        EXCLAMATIONMARKEQUAL,
-        LARROW,
-        RARROW,
-        LARROWEQUAL,
-        RARROWEQUAL
-      ),
-    BitwiseOp: ($) =>
-      choice(
-        AMPERSAND,
-        CARET,
-        PIPE,
-        keyword("orelse", $),
-        seq(keyword("catch", $), optional($.Payload))
-      ),
-
-    BitShiftOp: (_) => choice(LARROW2, RARROW2),
-
-    AdditionOp: (_) => choice(PLUS, MINUS, PLUS2, PLUSPERCENT, MINUSPERCENT),
-
-    MultiplyOp: (_) =>
-      choice(PIPE2, ASTERISK, SLASH, PERCENT, ASTERISK2, ASTERISKPERCENT),
-
-    PrefixOp: ($) =>
-      choice(
-        EXCLAMATIONMARK,
-        MINUS,
-        TILDE,
-        MINUSPERCENT,
-        AMPERSAND,
-        keyword("try", $),
-        keyword("await", $)
-      ),
-    PrefixTypeOp: ($) =>
-      choice(
-        QUESTIONMARK,
-        seq(keyword("anyframe", $), MINUSRARROW),
-        seq(
-          $.SliceTypeStart,
-          repeat(
+                    'inline',
+                    'noinline',
+                ),
+            )),
+            $.function_prototype,
             choice(
-              $.ByteAlign,
-              keyword(choice("const", "volatile", "allowzero"), $)
-            )
-          )
+                ';',
+                $.block,
+            ),
         ),
-        seq(
-          $.PtrTypeStart,
-          repeat(
+        top_variable_declaration: $ => seq(
+            optional(choice(
+                'export',
+                $.extern_ref,
+            )),
+            optional('threadlocal'),
+            $.variable_declaration,
+        ),
+        top_usingnamespace_declaration: $ => seq(
+            'usingnamespace',
+            $._expression,
+            ';',
+        ),
+
+        /*
+         * FnProto <- KEYWORD_fn IDENTIFIER? LPAREN ParamDeclList RPAREN ByteAlign? LinkSection? CallConv? EXCLAMATIONMARK? TypeExpr
+         */
+        function_prototype: $ => seq(
+            'fn',
+            optional($.identifier),
+            '(',
+            optional($.parameter_declaration_list),
+            ')',
+            optional($.byte_align),
+            optional($.link_section),
+            optional($.call_convention),
+            optional('!'),
+            // TODO ranme into type expression
+            $.basic_type,
+        ),
+
+        /*
+         * VarDecl <- (KEYWORD_const / KEYWORD_var) IDENTIFIER (COLON TypeExpr)? ByteAlign? LinkSection? (EQUAL Expr)? SEMICOLON
+         */
+        variable_declaration: $ => seq(
             choice(
-              seq(
-                keyword("align", $),
-                LPAREN,
-                $._Expr,
-                optional(seq(COLON, $.INTEGER, COLON, $.INTEGER)),
-                RPAREN
-              ),
-              keyword(choice("const", "volatile", "allowzero"), $)
-            )
-          )
+                'const',
+                'var',
+            ),
+            $.identifier,
+            optional(seq(
+                ':',
+                // TODO: rename into type expression
+                $.basic_type,
+            )),
+            optional($.byte_align),
+            optional($.link_section),
+            optional(seq(
+                '=',
+                $._expression,
+            )),
+            ';',
         ),
-        $.ArrayTypeStart
-      ),
 
-    SuffixOp: ($) =>
-      choice(
-        seq(
-          LBRACKET,
-          $._Expr,
-          optional(
-            seq(DOT2, optional(seq($._Expr, optional(seq(COLON, $._Expr)))))
-          ),
-          RBRACKET
+        /*
+         * ContainerField <- doc_comment? KEYWORD_comptime? IDENTIFIER (COLON (KEYWORD_anytype / TypeExpr) ByteAlign?)? (EQUAL Expr)?
+         */
+        container_field: $ => seq(
+            optional('comptime'),
+            $.identifier,
+            // TODO: : u8 -> extract into rule
+            optional(seq(
+                ':',
+                // TODO: rename into type expression
+                $.basic_type,
+                optional($.byte_align),
+            )),
+            optional(seq(
+                '=',
+                $._expression,
+            )),
         ),
-        seq(DOT, $.IDENTIFIER),
-        DOTASTERISK,
-        DOTQUESTIONMARK
-      ),
 
-    FnCallArguments: ($) => seq(LPAREN, optional($._ExprList), RPAREN),
-
-    // Ptr specific
-    SliceTypeStart: ($) =>
-      seq(LBRACKET, optional(seq(COLON, $._Expr)), RBRACKET),
-
-    PtrTypeStart: ($) =>
-      choice(
-        ASTERISK,
-        ASTERISK2,
-        seq(
-          LBRACKET,
-          ASTERISK,
-          optional(choice(LETTERC, seq(COLON, $._Expr))),
-          RBRACKET
-        )
-      ),
-
-    ArrayTypeStart: ($) =>
-      seq(LBRACKET, $._Expr, optional(seq(COLON, $._Expr)), RBRACKET),
-
-    // ContainerDecl specific
-    _ContainerDeclAuto: ($) =>
-      seq(
-        $.ContainerDeclType,
-        LBRACE,
-        optional($.container_doc_comment),
-        repeat($._ContainerMembers),
-        RBRACE
-      ),
-
-    ContainerDeclType: ($) =>
-      choice(
-        keyword("struct", $),
-        keyword("opaque", $),
-        seq(keyword("enum", $), optional(seq(LPAREN, $._Expr, RPAREN))),
-        seq(
-          keyword("union", $),
-          optional(
+        /*
+         * Statement
+         *     <- KEYWORD_comptime? VarDecl
+         *      / KEYWORD_comptime BlockExprStatement
+         *      / KEYWORD_nosuspend BlockExprStatement
+         *      / KEYWORD_suspend BlockExprStatement
+         *      / KEYWORD_defer BlockExprStatement
+         *      / KEYWORD_errdefer Payload? BlockExprStatement
+         *      / IfStatement
+         *      / LabeledStatement
+         *      / SwitchExpr
+         *      / AssignExpr SEMICOLON
+         */
+        statement: $ => choice(
             seq(
-              LPAREN,
-              choice(
-                seq(keyword("enum", $), optional(seq(LPAREN, $._Expr, RPAREN))),
-                $._Expr
-              ),
-              RPAREN
-            )
-          )
-        )
-      ),
-
-    // Alignment
-    ByteAlign: ($) => seq(keyword("align", $), LPAREN, $._Expr, RPAREN),
-
-    // Lists
-    IdentifierList: ($) =>
-      sepBy1(COMMA, seq(optional($.doc_comment), $.IDENTIFIER)),
-
-    SwitchProngList: ($) => sepBy1(COMMA, $.SwitchProng),
-
-    AsmOutputList: ($) => sepBy1(COMMA, $.AsmOutputItem),
-
-    AsmInputList: ($) => sepBy1(COMMA, $.AsmInputItem),
-
-    StringList: ($) => sepBy1(COMMA, $.STRINGLITERAL),
-
-    ParamDeclList: ($) => seq(LPAREN, sepBy(COMMA, $.ParamDecl), RPAREN),
-
-    _ExprList: ($) => sepBy1(COMMA, $._Expr),
-
-    // *** Tokens ***
-    container_doc_comment: (_) =>
-      token(repeat1(seq("//!", /[^\n]*/, /[ \n]*/))),
-    doc_comment: (_) => token(repeat1(seq("///", /[^\n]*/, /[ \n]*/))),
-    line_comment: (_) => token(seq("//", /.*/)),
-
-    CHAR_LITERAL: (_) => token(seq("'", char_char, "'")),
-
-    FLOAT: (_) =>
-      choice(
-        token(
-          seq("0x", hex_int, ".", hex_int, optional(seq(/[pP][-+]?/, dec_int)))
+                optional('comptime'),
+                $.variable_declaration,
+            ),
+            // $.if_statement,
+            // $.labeled_statement,
+            // $.switch_expression,
+            seq(
+                $.assignment_expression,
+                ';',
+            ),
         ),
-        token(seq(dec_int, ".", dec_int, optional(seq(/[eE][-+]?/, dec_int)))),
-        token(seq("0x", hex_int, /[pP][-+]?/, dec_int)),
-        token(seq(dec_int, /[eE][-+]?/, dec_int))
-      ),
+        // if_statement: $ => seq(
+        // labeled_statement: $ => seq(
+        // loop_statement: $ => seq(
+        // for_statement: $ => seq(
+        // while_statement: $ => seq(
+        // block_expression_statement: $ => seq(
 
-    INTEGER: (_) =>
-      choice(
-        token(seq("0b", bin_int)),
-        token(seq("0o", oct_int)),
-        token(seq("0x", hex_int)),
-        token(dec_int)
-      ),
+        /*
+         * BlockExpr <- BlockLabel? Block
+         */
+        block_expression: $ => seq(
+            optional($.block_label),
+            $.block,
+        ),
 
-    STRINGLITERALSINGLE: (_) => token(seq('"', repeat(string_char), '"')),
+        _expression: $ => choice(
+            $.primary_expression,
+            $.function_call_expression,
+            $.assignment_expression,
+            $.boolean_or_expression,
+            $.boolean_and_expression,
+            $.comparison_expression,
+            $.bitwise_expression,
+            $.bit_shift_expression,
+            $.addition_expression,
+            $.multiplication_expression,
+            $.prefix_expression,
+            $.suffix_expression,
+        ),
 
-    STRINGLITERAL: ($) =>
-      choice($.STRINGLITERALSINGLE, token(repeat1(seq(line_string)))),
+        /*
+         * AssignExpr <- Expr (AssignOp Expr)?
+         */
+        assignment_expression: $ => prec.right(PREC.ASSIGNMENT_EXPRESSION, seq(
+            $._expression,
+            $.assignment_operator,
+            $._expression,
+        )),
 
-    IDENTIFIER: (_) =>
-      choice(/[A-Za-z_][A-Za-z0-9_]*/, seq('@"', repeat(string_char), '"')),
-    BUILTINIDENTIFIER: (_) => seq("@", /[A-Za-z_][A-Za-z0-9_]*/),
-  },
+        /*
+         * BoolOrExpr <- BoolAndExpr (KEYWORD_or BoolAndExpr)*
+         */
+        boolean_or_expression: $ => prec.left(PREC.BOOLEAN_OR_EXPRESSION, seq(
+            $._expression,
+            'or',
+            $._expression,
+        )),
+
+        /*
+         * BoolAndExpr <- CompareExpr (KEYWORD_and CompareExpr)*
+         */
+        boolean_and_expression: $ => prec.left(PREC.BOOLEAN_AND_EXPRESSION, seq(
+            $._expression,
+            'and',
+            $._expression,
+        )),
+
+        /*
+         * CompareExpr <- BitwiseExpr (CompareOp BitwiseExpr)?
+         */
+        comparison_expression: $ => prec.right(PREC.COMPARISON_EXPRESSION, seq(
+            $._expression,
+            $.comparison_operator,
+            $._expression,
+        )),
+
+        /*
+         * BitwiseExpr <- BitShiftExpr (BitwiseOp BitShiftExpr)*
+         */
+        bitwise_expression: $ => prec.left(PREC.BITWISE_EXPRESSION, seq(
+            $._expression,
+            $.bitwise_operator,
+            $._expression,
+        )),
+
+        /*
+         * BitShiftExpr <- AdditionExpr (BitShiftOp AdditionExpr)*
+         */
+        bit_shift_expression: $ => prec.left(PREC.BIT_SHIFT_EXPRESSION, seq(
+            $._expression,
+            $.bit_shift_operator,
+            $._expression,
+        )),
+
+        /*
+         * AdditionExpr <- MultiplyExpr (AdditionOp MultiplyExpr)*
+         */
+        addition_expression: $ => prec.left(PREC.ADDITION_EXPRESSION, seq(
+            $._expression,
+            $.addition_operator,
+            $._expression,
+        )),
+
+        /*
+         * MultiplyExpr <- PrefixExpr (MultiplyOp PrefixExpr)*
+         */
+        multiplication_expression: $ => prec.left(PREC.MULTIPLICATION_EXPRESSION, seq(
+            $._expression,
+            $.multiplication_operator,
+            $._expression,
+        )),
+        
+        /*
+         * PrefixExpr <- PrefixOp* PrimaryExpr
+         */
+        prefix_expression: $ => prec.right(PREC.PREFIX_EXPRESSION, seq(
+            $.prefix_operator,
+            $._expression,
+        )),
+
+        /*
+         * SuffixExpr
+         *     <- KEYWORD_async PrimaryTypeExpr SuffixOp* FnCallArguments
+         *      / PrimaryTypeExpr (SuffixOp / FnCallArguments)*
+         */
+        suffix_expression: $ => prec.left(PREC.SUFFIX_EXPRESSION, seq(
+            $._expression,
+            $.suffix_operator,
+        )),
+
+        /*
+         * SuffixExpr
+         *     <- KEYWORD_async PrimaryTypeExpr SuffixOp* FnCallArguments
+         *      / PrimaryTypeExpr (SuffixOp / FnCallArguments)*
+         */
+        async_function_call_expression: $ => seq(
+            'async',
+            $.function_call_expression,
+        ),
+
+        /*
+         * SuffixExpr
+         *     <- KEYWORD_async PrimaryTypeExpr SuffixOp* FnCallArguments
+         *      / PrimaryTypeExpr (SuffixOp / FnCallArguments)*
+         */
+        function_call_expression: $ => prec.left(PREC.SUFFIX_EXPRESSION, seq(
+            $._expression,
+            $.function_call_arguments,
+        )),
+
+        /*
+         * Block <- LBRACE Statement* RBRACE
+         */
+        block: $ => seq(
+            '{',
+                repeat($.statement),
+            '}',
+        ),
+
+        /*
+         * InitList
+         *     <- LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
+         *      / LBRACE Expr (COMMA Expr)* COMMA? RBRACE
+         *      / LBRACE RBRACE
+         */
+        init_list: $ => seq(
+            '{',
+            optional(choice(
+                commaSeparatedDangle($.field_init),
+                commaSeparatedDangle($._expression),
+            )),
+            '}',
+        ),
+
+        /*
+         * PrimaryTypeExpr
+         *     <- BUILTINIDENTIFIER FnCallArguments
+         *      / CHAR_LITERAL
+         *      / ContainerDecl
+         *      / DOT IDENTIFIER
+         *      / DOT InitList
+         *      / ErrorSetDecl
+         *      / FLOAT
+         *      / FnProto
+         *      / GroupedExpr
+         *      / LabeledTypeExpr
+         *      / IDENTIFIER
+         *      / IfTypeExpr
+         *      / INTEGER
+         *      / KEYWORD_comptime TypeExpr
+         *      / KEYWORD_error DOT IDENTIFIER
+         *      / KEYWORD_false
+         *      / KEYWORD_null
+         *      / KEYWORD_anyframe
+         *      / KEYWORD_true
+         *      / KEYWORD_undefined
+         *      / KEYWORD_unreachable
+         *      / STRINGLITERAL
+         *      / SwitchExpr
+         */
+        primary_expression: $ => choice(
+            $.literal,
+            $.identifier,
+            $.builtin_identifier,
+            seq(
+                '.',
+                $.init_list,
+            ),
+        ),
+
+        /*
+         * BreakLabel <- COLON IDENTIFIER
+         */
+        break_label: $ => seq(
+            ':',
+            $.identifier,
+        ),
+
+        /*
+         * BlockLabel <- IDENTIFIER COLON
+         */
+        block_label: $ => seq(
+            $.identifier,
+            ':',
+        ),
+
+        /*
+         * FieldInit <- DOT IDENTIFIER EQUAL Expr
+         */
+        field_init: $ => seq(
+            '.',
+            $.identifier,
+            '=',
+            $._expression,
+        ),
+
+        /*
+         * WhileContinueExpr <- COLON LPAREN AssignExpr RPAREN
+         */
+        while_continue_expression: $ => seq(
+            ':',
+            '(',
+            // TODO: change to assignment_expression,
+            $._expression,
+            ')',
+        ),
+
+        /*
+         * LinkSection <- KEYWORD_linksection LPAREN Expr RPAREN
+         */
+        link_section: $ => seq(
+            'linksection',
+            '(',
+            $._expression,
+            ')',
+        ),
+
+        /*
+         * CallConv <- KEYWORD_callconv LPAREN Expr RPAREN
+         */
+        call_convention: $ => seq(
+            'callconv',
+            '(',
+            $._expression,
+            ')',
+        ),
+
+        /*
+         * ParamDecl
+         *     <- doc_comment? (KEYWORD_noalias / KEYWORD_comptime)? (IDENTIFIER COLON)? ParamType
+         *      / DOT3
+         */
+        parameter_declaration: $ => choice(
+            '...',
+            seq(
+                optional(choice(
+                    'noalias',
+                    'comptime',
+                )),
+                optional(seq(
+                    $.identifier,
+                    ':',
+                )),
+                // TODO: rename into type expression
+                choice(
+                    'anytype',
+                    $.basic_type,
+                ),
+            ),
+        ),
+
+        /*
+         * IfPrefix <- KEYWORD_if LPAREN Expr RPAREN PtrPayload?
+         */
+        if_prefix: $ => seq(
+            'if',
+            '(',
+            $._expression,
+            ')',
+            optional($.pointer_payload),
+        ),
+
+        /*
+         * WhilePrefix <- KEYWORD_while LPAREN Expr RPAREN PtrPayload? WhileContinueExpr?
+         */
+        while_prefix: $ => seq(
+            'while',
+            '(',
+            $._expression,
+            ')',
+            optional($.pointer_payload),
+            optional($.while_continue_expression),
+        ),
+
+        /*
+         * ForPrefix <- KEYWORD_for LPAREN Expr RPAREN PtrIndexPayload
+         */
+        for_prefix: $ => seq(
+            'for',
+            '(',
+            $._expression,
+            ')',
+            $.pointer_index_payload,
+        ),
+
+        /*
+         * Payload <- PIPE IDENTIFIER PIPE
+         */
+        payload: $ => seq(
+            '|',
+            $.identifier,
+            '|',
+        ),
+
+        /*
+         * PtrPayload <- PIPE ASTERISK? IDENTIFIER PIPE
+         */
+        pointer_payload: $ => seq(
+            '|',
+            optional('*'),
+            $.identifier,
+            '|',
+        ),
+
+        /*
+         * PtrIndexPayload <- PIPE ASTERISK? IDENTIFIER (COMMA IDENTIFIER)? PIPE
+         */
+        pointer_index_payload: $ => seq(
+            '|',
+            optional('*'),
+            $.identifier,
+            optional(seq(
+                ',',
+                $.identifier,
+            )),
+            '|',
+        ),
+
+        /*
+         * SwitchProng <- SwitchCase EQUALRARROW PtrPayload? AssignExpr
+         */
+        switch_prong: $ => seq(
+            $.switch_case,
+            '=>',
+            optional($.pointer_payload),
+            $._expression,
+        ),
+
+        /*
+         *
+         * SwitchCase
+         *     <- SwitchItem (COMMA SwitchItem)* COMMA?
+         *      / KEYWORD_else
+         */
+        switch_case: $ => choice(
+            commaSeparatedDangle($.switch_item),
+            'else',
+        ),
+
+        /*
+         * SwitchItem <- Expr (DOT3 Expr)?
+         */
+        switch_item: $ => seq(
+            $._expression,
+            optional(seq(
+                '...',
+                $._expression,
+            )),
+        ),
+
+        /*
+         * AssignOp
+         *     <- ASTERISKEQUAL
+         *      / SLASHEQUAL
+         *      / PERCENTEQUAL
+         *      / PLUSEQUAL
+         *      / MINUSEQUAL
+         *      / LARROW2EQUAL
+         *      / RARROW2EQUAL
+         *      / AMPERSANDEQUAL
+         *      / CARETEQUAL
+         *      / PIPEEQUAL
+         *      / ASTERISKPERCENTEQUAL
+         *      / PLUSPERCENTEQUAL
+         *      / MINUSPERCENTEQUAL
+         *      / EQUAL
+         */
+        assignment_operator: $ => choice(
+            '=',
+            '*=',
+            '/=',
+            '%=',
+            '+=',
+            '-=',
+            '<<=',
+            '>>=',
+            '&=',
+            '^=',
+            '|=',
+        ),
+
+        /*
+         * CompareOp
+         *     <- EQUALEQUAL
+         *      / EXCLAMATIONMARKEQUAL
+         *      / LARROW
+         *      / RARROW
+         *      / LARROWEQUAL
+         *      / RARROWEQUAL
+         */
+        comparison_operator: $ => choice(
+            '==',
+            '!=',
+            '<',
+            '>',
+            '<=',
+            '>=',
+        ),
+
+        /*
+         * BitwiseOp
+         *     <- AMPERSAND
+         *      / CARET
+         *      / PIPE
+         *      / KEYWORD_orelse
+         *      / KEYWORD_catch Payload?
+         */
+        bitwise_operator: $ => choice(
+            '&',
+            '^',
+            '|',
+            'orelse',
+            seq(
+                'catch',
+                optional($.payload),
+            ),
+        ),
+
+        /*
+         * BitShiftOp
+         *     <- LARROW2
+         *      / RARROW2
+         */
+        bit_shift_operator: $ => choice(
+            '<<',
+            '>>',
+        ),
+
+        /*
+         * AdditionOp
+         *     <- PLUS
+         *      / MINUS
+         *      / PLUS2
+         *      / PLUSPERCENT
+         *      / MINUSPERCENT
+         */
+        addition_operator: $ => choice(
+            '+',
+            '-',
+            '++',
+            '+%',
+            '-%',
+        ),
+
+        /*
+         * MultiplyOp
+         *     <- PIPE2
+         *      / ASTERISK
+         *      / SLASH
+         *      / PERCENT
+         *      / ASTERISK2
+         *      / ASTERISKPERCENT
+         */
+        multiplication_operator: $ => choice(
+            '*',
+            '/',
+            '%',
+            '**',
+            '*%',
+            '||',
+        ),
+
+        /*
+         * PrefixOp
+         *     <- EXCLAMATIONMARK
+         *      / MINUS
+         *      / TILDE
+         *      / MINUSPERCENT
+         *      / AMPERSAND
+         *      / KEYWORD_try
+         *      / KEYWORD_await
+         */
+        prefix_operator: $ => choice(
+            '!',
+            '-',
+            '~',
+            '-%',
+            '&',
+            'try',
+            'await',
+        ),
+
+        /*
+         * PrefixTypeOp
+         *     <- QUESTIONMARK
+         *      / KEYWORD_anyframe MINUSRARROW
+         *      / SliceTypeStart (ByteAlign / KEYWORD_const / KEYWORD_volatile / KEYWORD_allowzero)*
+         *      / PtrTypeStart (KEYWORD_align LPAREN Expr (COLON INTEGER COLON INTEGER)? RPAREN / KEYWORD_const / KEYWORD_volatile / KEYWORD_allowzero)*
+         *      / ArrayTypeStart
+         */
+        prefix_type_operator: $ => choice(
+            '?',
+            seq(
+                'anyframe',
+                '->',
+            ),
+        ),
+
+        /*
+         * SuffixOp
+         *     <- LBRACKET Expr (DOT2 (Expr? (COLON Expr)?)?)? RBRACKET
+         *      / DOT IDENTIFIER
+         *      / DOTASTERISK
+         *      / DOTQUESTIONMARK
+         */
+        suffix_operator: $ => choice(
+            seq(
+                '[',
+                optional(seq(
+                    '..',
+                    optional($._expression),
+                    optional(seq(
+                        ':',
+                        $._expression,
+                    )),
+                )),
+                ']',
+            ),
+            seq(
+                '.',
+                $.identifier,
+            ),
+            '.*',
+            '.?',
+        ),
+
+        /*
+         * FnCallArguments <- LPAREN ExprList RPAREN
+         */
+        function_call_arguments: $ => seq(
+            '(',
+            optional($.expression_list),
+            ')',
+        ),
+
+        /*
+         * SliceTypeStart <- LBRACKET (COLON Expr)? RBRACKET
+         */
+        slice_type_start: $ => seq(
+            '[',
+            optional(seq(
+                ':',
+                $._expression,
+            )),
+            ']',
+        ),
+
+        /*
+         * PtrTypeStart
+         *     <- ASTERISK
+         *      / ASTERISK2
+         *      / LBRACKET ASTERISK (LETTERC / COLON Expr)? RBRACKET
+         */
+        pointer_type_start: $ => choice(
+            '*',
+            '**',
+            seq(
+                '[',
+                '*',
+                choice(
+                    'c',
+                    seq(
+                        ':',
+                        $._expression,
+                    ),
+                ),
+                ']',
+            ),
+
+        ),
+
+        /*
+         * ArrayTypeStart <- LBRACKET Expr (COLON Expr)? RBRACKET
+         */
+        array_type_start: $ => seq(
+            '[',
+            $._expression,
+            optional(seq(
+                ':',
+                $._expression,
+            )),
+            ']',
+        ),
+
+        // container_declaration_auto
+        // container_declaration_type
+
+        /*
+         * ByteAlign <- KEYWORD_align LPAREN Expr RPAREN
+         */
+        byte_align: $ => seq(
+            'align',
+            '(',
+            $._expression,
+            ')',
+        ),
+
+        /*
+         * IdentifierList <- (doc_comment? IDENTIFIER COMMA)* (doc_comment? IDENTIFIER)?
+         */
+        identifier_list: $ => commaSeparatedDangle(
+            $.identifier,
+        ),
+
+        /*
+         * SwitchProngList <- (SwitchProng COMMA)* SwitchProng?
+         */
+        switch_prong_list: $ => commaSeparatedDangle(
+            $.switch_prong,
+        ),
+
+        /*
+         * AsmOutputList <- (AsmOutputItem COMMA)* AsmOutputItem?
+         */
+        assembly_output_list: $ => commaSeparatedDangle(
+            $.assembly_output_item,
+        ),
+
+        /*
+         * AsmInputList <- (AsmInputItem COMMA)* AsmInputItem?
+         */
+        assembly_input_list: $ => commaSeparatedDangle(
+            $.assembly_input_item,
+        ),
+
+        /*
+         * StringList <- (STRINGLITERAL COMMA)* STRINGLITERAL?
+         */
+        string_list: $ => commaSeparatedDangle(
+            $.string_literal,
+        ),
+
+        /*
+         * ParamDeclList <- (ParamDecl COMMA)* ParamDecl?
+         */
+        parameter_declaration_list: $ => commaSeparatedDangle(
+            $.parameter_declaration,
+        ),
+
+        /*
+         * ExprList <- (Expr COMMA)* Expr?
+         */
+        expression_list: $ => commaSeparatedDangle(
+            $._expression,
+        ),
+        
+        /*
+         * AsmOutput <- COLON AsmOutputList AsmInput?
+         */
+        assembly_output: $ => seq(
+            ':',
+            $.assembly_output_list,
+            optional($.assembly_input),
+        ),
+
+        /*
+         * AsmOutputItem <- LBRACKET IDENTIFIER RBRACKET STRINGLITERAL LPAREN (MINUSRARROW TypeExpr / IDENTIFIER) RPAREN
+         */
+        assembly_output_item: $ => seq(
+            '[',
+            $.identifier,
+            ']',
+            $.string_literal,
+            '(',
+            choice(
+                seq(
+                    '->',
+                    // TODO: rename into type expression
+                    $.basic_type,
+                ),
+                $.identifier,
+            ),
+            ')',
+        ),
+
+        /*
+         * AsmInput <- COLON AsmInputList AsmClobbers?
+         */
+        assembly_input: $ => seq(
+            ':',
+            $.assembly_input_list,
+            optional($.assembly_clobbers),
+        ),
+
+        /*
+         * AsmInputItem <- LBRACKET IDENTIFIER RBRACKET STRINGLITERAL LPAREN Expr RPAREN
+         */
+        assembly_input_item: $ => seq(
+            '[',
+            $.identifier,
+            ']',
+            $.string_literal,
+            '(',
+            $._expression,
+            ')',
+        ),
+
+        /*
+         * AsmClobbers <- COLON StringList
+         */
+        assembly_clobbers: $ => seq(':', $.string_list),
+
+        basic_type: $ => choice(
+            ...BASIC_TYPES,
+        ),
+
+        type_name: $ => $.identifier,
+
+        extern_ref: $ => seq(
+            'extern',
+            optional($.string_literal_singleline),
+        ),
+
+        literal: $ => choice(
+            $.null_literal,
+            $.undefined_literal,
+            $.boolean_literal,
+            $.string_literal,
+            $.integer_literal,
+            $.float_literal,
+            $.character_literal,
+        ),
+
+        undefined_literal: $ => 'undefined',
+
+        null_literal: $ => 'null',
+
+        boolean_literal: $ => choice('true', 'false'),
+
+        /*
+         * char_char
+         *     <- mb_utf8_literal
+         *      / char_escape
+         *      / ascii_char_not_nl_slash_squote
+         *
+         * CHAR_LITERAL <- "'" char_char "'" skip
+         */
+        character_literal: $ => seq(
+            '\'',
+            choice(
+                $.mb_utf8_literal,
+                $.character_escape,
+                /[^\n\\']/,
+            ),
+            '\''
+        ),
+
+        /*
+         * char_escape
+         *     <- "\\x" hex hex
+         *      / "\\u{" hex+ "}"
+         *      / "\\" [nr\\t'"]
+         */
+        character_escape: $ => choice(
+            /\\x[A-Fa-f0-9]{2}/,
+            /\\u{[A-Fa-f0-9]+}/,
+            /\\[nr\\t'"]/,
+        ),
+
+        /*
+         * mb_utf8_literal <-
+         *        oxF4      ox80_ox8F ox80_oxBF ox80_oxBF
+         *      / oxF1_oxF3 ox80_oxBF ox80_oxBF ox80_oxBF
+         *      / oxF0      ox90_0xBF ox80_oxBF ox80_oxBF
+         *      / oxEE_oxEF ox80_oxBF ox80_oxBF
+         *      / oxED      ox80_ox9F ox80_oxBF
+         *      / oxE1_oxEC ox80_oxBF ox80_oxBF
+         *      / oxE0      oxA0_oxBF ox80_oxBF
+         *      / oxC2_oxDF ox80_oxBF
+         *
+         * https://lemire.me/blog/2018/05/09/how-quickly-can-you-check-that-a-string-is-valid-unicode-utf-8/
+         */
+        mb_utf8_literal: $ => choice(
+            /\xF4[\x80-\x8F][\x80-\xBF][\x80-\xBF]/,
+            /[\xF1-\xF3][\x80-\xBF][\x80-\xBF][\x80-\xBF]/,
+            /\xF0[\x90-\xBF][\x80-\xBF][\x80-\xBF]/,
+            /[\xEE-\xEF][\x80-\xBF][\x80-\xBF]/,
+            /\xED[\x80-\x9F][\x80-\xBF]/,
+            /[\xE1-\xEC][\x80-\xBF][\x80-\xBF]/,
+            /\xE0[\xA0-\xBF][\x80-\xBF]/,
+            /[\xC2-\xDF][\x80-\xBF]/,
+        ),
+
+        /*
+         * string_char
+         *     <- char_escape
+         *      / [^\\"\n]
+         */
+        string_character: $ => choice(
+            $.character_escape,
+            /[^\\"\n]+/,
+        ),
+
+        /*
+         * STRINGLITERALSINGLE <- "\"" string_char* "\"" skip
+         */
+        string_literal_singleline: $ => seq(
+            '"',
+            repeat($.string_character),
+            '"',
+        ),
+
+        /*
+         * line_string <- ("\\\\" [^\n]* [ \n]*)+
+         */
+        string_literal_multiline: $ => prec.right(repeat1(
+            /\\\\[^\n]*\n*/,
+        )),
+
+        /*
+         * STRINGLITERAL
+         *     <- STRINGLITERALSINGLE
+         *      / (line_string                 skip)+
+         */
+        string_literal: $ => choice(
+            $.string_literal_multiline,
+            $.string_literal_singleline,
+        ),
+
+        /*
+         * FLOAT
+         *     <- "0x" hex_int "." hex_int ([pP] [-+]? dec_int)? skip
+         *      /      dec_int "." dec_int ([eE] [-+]? dec_int)? skip
+         *      / "0x" hex_int [pP] [-+]? dec_int skip
+         *      /      dec_int [eE] [-+]? dec_int skip
+         */
+        float_literal: $ => choice(
+            /0x[A-Fa-f0-9]+(_?[A-Fa-f0-9]+)*\.[A-Fa-f0-9]+(_?[A-Fa-f0-9]+)*([pP][-+]?([0-9]+(_?[0-9]+)*))?/,
+            /[0-9]+(_?[0-9]+)*\.[0-9]+(_?[0-9]+)*([pP][-+]?([0-9]+(_?[0-9]+)*))?/,
+            /0x[A-Fa-f0-9](_?[A-Fa-f0-9])*[pP][-+]?[0-9](_?[0-9]+)*/,
+            /[0-9]+(_?[0-9]+)*[pP][-+]?[0-9](_?[0-9]+)*/,
+        ),
+
+        /*
+         * INTEGER
+         *     <- "0b" bin_int skip
+         *      / "0o" oct_int skip
+         *      / "0x" hex_int skip
+         *      /      dec_int   skip
+         */
+        integer_literal: $ => choice(
+            /0b[01]+(_?[01]+)*/,
+            /0o[0-7]+(_?[0-7]+)*/,
+            /[0-9]+(_?[0-9]+)*/,
+            /0x[A-Fa-f0-9]+(_?[A-Fa-f0-9]+)*/,
+        ),
+
+        /*
+         * IDENTIFIER
+         *    <- !keyword [A-Za-z_] [A-Za-z0-9_]* skip
+         *     / "@\"" string_char* "\""                            skip
+         */
+        identifier: $ => /[A-Za-z_][A-Za-z0-9_]*/,
+
+        /*
+         * BUILTINIDENTIFIER <- "@"[A-Za-z_][A-Za-z0-9_]* skip
+         */
+        builtin_identifier: $ => /@[A-Za-z_][A-Za-z0-9_]*/,
+
+        /* 
+         * For now, do not differentiate between comment types.
+         *
+         * line_comment <- '//' ![!/][^\n]* / '////' [^\n]*
+         * doc_comment <- ('///' [^\n]* [ \n]*)+
+         * container_doc_comment <- ('//!' [^\n]* [ \n]*)+
+         */
+        comment: $ => /\/\/.*/,
+    },
 });
 
-function sepBy1(sep, rule) {
-  return seq(rule, repeat(seq(sep, rule)), optional(sep));
+function commaSeparatedDangle(rule) {
+    return seq(
+        rule,
+        repeat(seq(
+            ',',
+            rule,
+        )),
+        optional(','),
+    );
 }
-function keyword(rule, _) {
-  return rule;
-  // return alias(rule, $.keyword);
-}
-function sepBy(sep, rule) {
-  return optional(sepBy1(sep, rule));
+
+function commaSeparated(rule) {
+    return seq(
+        rule,
+        repeat(seq(
+            ',',
+            rule,
+        )),
+    );
 }

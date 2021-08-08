@@ -1,0 +1,336 @@
+================================================================================
+Zig Documentation - Hello World #1
+================================================================================
+
+const std = @import("std");
+
+pub fn main() !void {
+    const stdout = std.io.getStdOut().writer();
+    try stdout.print("Hello, {s}!\n", .{"world"});
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (top_level_declaration
+    (top_variable_declaration
+      (variable_declaration
+        (identifier)
+        (function_call_expression
+          (builtin_identifier)
+          (function_call_arguments
+            (string_literal))))))
+  (top_level_declaration
+    (top_function_declaration
+      (function_prototype
+        (identifier)
+        (basic_type))
+      (block
+        (statement
+          (variable_declaration
+            (identifier)
+            (function_call_expression
+              (suffix_expression
+                (function_call_expression
+                  (suffix_expression
+                    (suffix_expression
+                      (identifier)
+                      (suffix_operator
+                        (identifier)))
+                    (suffix_operator
+                      (identifier)))
+                  (function_call_arguments))
+                (suffix_operator
+                  (identifier)))
+              (function_call_arguments))))
+        (ERROR
+          (prefix_expression
+            (function_call_expression
+              (suffix_expression
+                (identifier)
+                (suffix_operator
+                  (identifier)))
+              (function_call_arguments
+                (string_literal
+                  (character_escape))
+                (init_list
+                  (string_literal))))))))))
+
+================================================================================
+Zig Documentation - Test #1
+================================================================================
+
+test "builtin.is_test" {
+    try expect(builtin.is_test);
+}
+
+test "unused function" { }
+
+test "assert in release fast mode" {
+    assert(false);
+}
+
+test "expect in release fast mode" {
+    try expect(false);
+}
+
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (ERROR
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (suffix_expression
+                (identifier)
+                (suffix_operator
+                  (identifier)))))))))
+  (test_declaration
+    (block))
+  (test_declaration
+    (block
+      (ERROR
+        (function_call_expression
+          (identifier)
+          (function_call_arguments
+            (boolean_literal))))))
+  (test_declaration
+    (block
+      (ERROR
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (boolean_literal))))))))
+
+================================================================================
+Zig Documentation - Values #1
+================================================================================
+
+pub fn main() void {
+    // integers
+    const one_plus_one: i32 = 1 + 1;
+
+    // floats
+    const seven_div_three: f32 = 7.0 / 3.0;
+
+    // boolean
+    print("{}\n{}\n{}\n", .{
+        true and false,
+        true or false,
+        !true,
+    });
+
+    // optional
+    var optional_value: ?[]const u8 = null;
+
+    optional_value = "hi";
+
+    // error union
+    var number_or_error: anyerror!i32 = error.ArgNotFound;
+
+    number_or_error = 1234;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (top_level_declaration
+    (top_function_declaration
+      (function_prototype
+        (identifier)
+        (basic_type))
+      (block
+        (comment)
+        (statement
+          (variable_declaration
+            (identifier)
+            (basic_type)
+            (addition_expression
+              (integer_literal)
+              (integer_literal))))
+        (comment)
+        (statement
+          (variable_declaration
+            (identifier)
+            (basic_type)
+            (multiplication_expression
+              (float_literal)
+              (float_literal))))
+        (comment)
+        (ERROR
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (string_literal
+                (character_escape)
+                (character_escape)
+                (character_escape))
+              (init_list
+                (boolean_and_expression
+                  (boolean_literal)
+                  (boolean_literal))
+                (boolean_or_expression
+                  (boolean_literal)
+                  (boolean_literal))
+                (prefix_expression
+                  (boolean_literal))))))
+        (comment)
+        (statement
+          (variable_declaration
+            (identifier)
+            (ERROR)
+            (basic_type)
+            (null_literal)))
+        (statement
+          (assignment_expression
+            (identifier)
+            (string_literal)))
+        (comment)
+        (statement
+          (variable_declaration
+            (identifier)
+            (basic_type)
+            (MISSING ";")))
+        (statement
+          (assignment_expression
+            (prefix_expression
+              (identifier))
+            (suffix_expression
+              (identifier)
+              (suffix_operator
+                (identifier)))))
+        (statement
+          (assignment_expression
+            (identifier)
+            (integer_literal))))))
+  (container_field
+    (MISSING identifier)))
+
+================================================================================
+Zig Documentation - Values #2
+================================================================================
+
+test "string literals" {
+    const bytes = "hello";
+    try expect(@TypeOf(bytes) == *const [5:0]u8);
+    try expect(bytes.len == 5);
+    try expect(bytes[1] == 'e');
+    try expect(bytes[5] == 0);
+    try expect('e' == '\x65');
+    try expect('\u{1f4a9}' == 128169);
+    try expect('💯' == 128175);
+    try expect(mem.eql(u8, "hello", "h\x65llo"));
+    try expect("\xff"[0] == 0xff); // non-UTF-8 strings are possible with \xNN notation.
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (string_literal)))
+      (ERROR
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (multiplication_expression
+                (function_call_expression
+                  (builtin_identifier)
+                  (function_call_arguments
+                    (identifier)))
+                (ERROR)
+                (suffix_expression
+                  (identifier)
+                  (suffix_operator
+                    (ERROR))))
+              (ERROR))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (comparison_expression
+                (suffix_expression
+                  (identifier)
+                  (suffix_operator
+                    (identifier)))
+                (integer_literal)))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (comparison_expression
+                (suffix_expression
+                  (identifier)
+                  (suffix_operator
+                    (ERROR)))
+                (character_literal)))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (comparison_expression
+                (suffix_expression
+                  (identifier)
+                  (suffix_operator
+                    (ERROR)))
+                (integer_literal)))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (comparison_expression
+                (character_literal)
+                (character_literal
+                  (character_escape))))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (comparison_expression
+                (character_literal
+                  (character_escape))
+                (integer_literal)))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (comparison_expression
+                (character_literal)
+                (integer_literal)))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (function_call_expression
+                (suffix_expression
+                  (identifier)
+                  (suffix_operator
+                    (identifier)))
+                (function_call_arguments
+                  (identifier)
+                  (string_literal)
+                  (string_literal
+                    (character_escape)))))))
+        (prefix_expression
+          (function_call_expression
+            (identifier)
+            (function_call_arguments
+              (comparison_expression
+                (suffix_expression
+                  (string_literal
+                    (character_escape))
+                  (suffix_operator
+                    (ERROR)))
+                (integer_literal))))))
+      (comment)))
+  (container_field
+    (MISSING identifier)))

@@ -1,11 +1,6 @@
 [
   {
-    "type": "AdditionOp",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "ArrayTypeStart",
+    "type": "addition_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -13,58 +8,574 @@
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "AsmClobbers",
+    "type": "assembly_clobbers",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assembly_input",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assembly_clobbers",
+          "named": true
+        },
+        {
+          "type": "assembly_input_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assembly_input_item",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assembly_output_item",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "basic_type",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "assignment_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "basic_type",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "bit_shift_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "bitwise_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "payload",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "block_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "block_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "block_label",
     "named": true,
     "fields": {},
     "children": {
@@ -72,14 +583,14 @@
       "required": true,
       "types": [
         {
-          "type": "StringList",
+          "type": "identifier",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "AsmExpr",
+    "type": "boolean_and_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -87,512 +598,99 @@
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "AsmOutput",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "function_call_expression",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "AsmInput",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmClobbers",
-          "named": true
-        },
-        {
-          "type": "AsmInputList",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "AsmInputItem",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IDENTIFIER",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "STRINGLITERAL",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "AsmInputList",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmInputItem",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "AsmOutput",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmInput",
-          "named": true
-        },
-        {
-          "type": "AsmOutputList",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "AsmOutputItem",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IDENTIFIER",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "STRINGLITERAL",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "AsmOutputList",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmOutputItem",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "AssignExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "AssignOp",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "AssignOp",
+    "type": "boolean_literal",
     "named": true,
     "fields": {}
   },
   {
-    "type": "BUILTINIDENTIFIER",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "BinaryExpr",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "AsmExpr",
-            "named": true
-          },
-          {
-            "type": "BinaryExpr",
-            "named": true
-          },
-          {
-            "type": "Block",
-            "named": true
-          },
-          {
-            "type": "BlockLabel",
-            "named": true
-          },
-          {
-            "type": "BreakLabel",
-            "named": true
-          },
-          {
-            "type": "ErrorUnionExpr",
-            "named": true
-          },
-          {
-            "type": "IfExpr",
-            "named": true
-          },
-          {
-            "type": "InitList",
-            "named": true
-          },
-          {
-            "type": "LoopExpr",
-            "named": true
-          },
-          {
-            "type": "PrefixTypeOp",
-            "named": true
-          },
-          {
-            "type": "UnaryExpr",
-            "named": true
-          },
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "AdditionOp",
-            "named": true
-          },
-          {
-            "type": "BitShiftOp",
-            "named": true
-          },
-          {
-            "type": "BitwiseOp",
-            "named": true
-          },
-          {
-            "type": "CompareOp",
-            "named": true
-          },
-          {
-            "type": "MultiplyOp",
-            "named": true
-          },
-          {
-            "type": "and",
-            "named": false
-          },
-          {
-            "type": "or",
-            "named": false
-          }
-        ]
-      },
-      "right": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "AsmExpr",
-            "named": true
-          },
-          {
-            "type": "BinaryExpr",
-            "named": true
-          },
-          {
-            "type": "Block",
-            "named": true
-          },
-          {
-            "type": "BlockLabel",
-            "named": true
-          },
-          {
-            "type": "BreakLabel",
-            "named": true
-          },
-          {
-            "type": "ErrorUnionExpr",
-            "named": true
-          },
-          {
-            "type": "IfExpr",
-            "named": true
-          },
-          {
-            "type": "InitList",
-            "named": true
-          },
-          {
-            "type": "LoopExpr",
-            "named": true
-          },
-          {
-            "type": "PrefixTypeOp",
-            "named": true
-          },
-          {
-            "type": "UnaryExpr",
-            "named": true
-          },
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "BitShiftOp",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "BitwiseOp",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "Block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "AssignExpr",
-          "named": true
-        },
-        {
-          "type": "BlockExprStatement",
-          "named": true
-        },
-        {
-          "type": "IfStatement",
-          "named": true
-        },
-        {
-          "type": "LabeledStatement",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "SwitchExpr",
-          "named": true
-        },
-        {
-          "type": "VarDecl",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "BlockExpr",
+    "type": "boolean_or_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -600,18 +698,94 @@
       "required": true,
       "types": [
         {
-          "type": "Block",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "BlockExprStatement",
+    "type": "byte_align",
     "named": true,
     "fields": {},
     "children": {
@@ -619,18 +793,94 @@
       "required": true,
       "types": [
         {
-          "type": "AssignExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BlockExpr",
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "BlockLabel",
+    "type": "call_convention",
     "named": true,
     "fields": {},
     "children": {
@@ -638,152 +888,114 @@
       "required": true,
       "types": [
         {
-          "type": "IDENTIFIER",
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "BreakLabel",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "IDENTIFIER",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ByteAlign",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "CallConv",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "CompareOp",
+    "type": "character_escape",
     "named": true,
     "fields": {}
   },
   {
-    "type": "ContainerDecl",
+    "type": "character_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "character_escape",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "comparison_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -791,94 +1003,94 @@
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "ContainerDeclType",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "ContainerField",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "FnProto",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "function_call_expression",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "STRINGLITERALSINGLE",
+          "type": "init_list",
           "named": true
         },
         {
-          "type": "TestDecl",
+          "type": "integer_literal",
           "named": true
         },
         {
-          "type": "TopLevelComptime",
+          "type": "multiplication_expression",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "null_literal",
           "named": true
         },
         {
-          "type": "VarDecl",
+          "type": "prefix_expression",
           "named": true
         },
         {
-          "type": "container_doc_comment",
+          "type": "string_literal",
           "named": true
         },
         {
-          "type": "doc_comment",
+          "type": "suffix_expression",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "ContainerDeclType",
+    "type": "container_field",
     "named": true,
     "fields": {},
     "children": {
@@ -886,58 +1098,117 @@
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "basic_type",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "byte_align",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "ContainerField",
+    "type": "extern_ref",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "character_escape",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "field_init",
     "named": true,
     "fields": {},
     "children": {
@@ -945,129 +1216,194 @@
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "ByteAlign",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "IDENTIFIER",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "function_call_expression",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "doc_comment",
+          "type": "init_list",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "ErrorSetDecl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "IdentifierList",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ErrorUnionExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "FnCallArguments",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "PrimaryTypeExpr",
-          "named": true
-        },
-        {
-          "type": "SuffixOp",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "FLOAT",
+    "type": "float_literal",
     "named": true,
     "fields": {}
   },
   {
-    "type": "FieldInit",
+    "type": "function_call_arguments",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_call_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -1075,62 +1411,98 @@
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "IDENTIFIER",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "function_call_arguments",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "FnCallArguments",
+    "type": "function_prototype",
     "named": true,
     "fields": {},
     "children": {
@@ -1138,920 +1510,138 @@
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "basic_type",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "byte_align",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "call_convention",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "link_section",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
+          "type": "parameter_declaration",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "FnProto",
+    "type": "init_list",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "ByteAlign",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "CallConv",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "IDENTIFIER",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "LinkSection",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "ParamDeclList",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "field_init",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "ForExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "ForPrefix",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ForPrefix",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "PtrIndexPayload",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ForStatement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AssignExpr",
-          "named": true
-        },
-        {
-          "type": "BlockExpr",
-          "named": true
-        },
-        {
-          "type": "BlockExprStatement",
-          "named": true
-        },
-        {
-          "type": "ForPrefix",
-          "named": true
-        },
-        {
-          "type": "IfStatement",
-          "named": true
-        },
-        {
-          "type": "LabeledStatement",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "SwitchExpr",
-          "named": true
-        },
-        {
-          "type": "VarDecl",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ForTypeExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "ForPrefix",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "GroupedExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "IDENTIFIER",
+    "type": "integer_literal",
     "named": true,
     "fields": {}
   },
   {
-    "type": "INTEGER",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "IdentifierList",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "IDENTIFIER",
-          "named": true
-        },
-        {
-          "type": "doc_comment",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "IfExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "IfPrefix",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "IfPrefix",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "PtrPayload",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "IfStatement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AssignExpr",
-          "named": true
-        },
-        {
-          "type": "BlockExpr",
-          "named": true
-        },
-        {
-          "type": "BlockExprStatement",
-          "named": true
-        },
-        {
-          "type": "IfPrefix",
-          "named": true
-        },
-        {
-          "type": "IfStatement",
-          "named": true
-        },
-        {
-          "type": "LabeledStatement",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "SwitchExpr",
-          "named": true
-        },
-        {
-          "type": "VarDecl",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "IfTypeExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfPrefix",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "InitList",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "FieldInit",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "LabeledStatement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "LoopStatement",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "LabeledTypeExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "LoopTypeExpr",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "LinkSection",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "LoopExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ForExpr",
-          "named": true
-        },
-        {
-          "type": "WhileExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "LoopStatement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ForStatement",
-          "named": true
-        },
-        {
-          "type": "WhileStatement",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "LoopTypeExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ForTypeExpr",
-          "named": true
-        },
-        {
-          "type": "WhileTypeExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "MultiplyOp",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "ParamDecl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "IDENTIFIER",
-          "named": true
-        },
-        {
-          "type": "ParamType",
-          "named": true
-        },
-        {
-          "type": "doc_comment",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ParamDeclList",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "ParamDecl",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ParamType",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "Payload",
+    "type": "link_section",
     "named": true,
     "fields": {},
     "children": {
@@ -2059,108 +1649,94 @@
       "required": true,
       "types": [
         {
-          "type": "IDENTIFIER",
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "PrefixOp",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "PrefixTypeOp",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "ArrayTypeStart",
-          "named": true
-        },
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ByteAlign",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "INTEGER",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "PtrTypeStart",
-          "named": true
-        },
-        {
-          "type": "SliceTypeStart",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "PrimaryTypeExpr",
+    "type": "multiplication_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -2168,101 +1744,113 @@
       "required": true,
       "types": [
         {
-          "type": "BUILTINIDENTIFIER",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BuildinTypeExpr",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "CHAR_LITERAL",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "ContainerDecl",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "ErrorSetDecl",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "FLOAT",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "FnCallArguments",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "FnProto",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "GroupedExpr",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "IDENTIFIER",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "INTEGER",
+          "type": "function_call_expression",
           "named": true
         },
         {
-          "type": "IfTypeExpr",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "init_list",
           "named": true
         },
         {
-          "type": "LabeledTypeExpr",
+          "type": "integer_literal",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "multiplication_expression",
           "named": true
         },
         {
-          "type": "STRINGLITERAL",
+          "type": "null_literal",
           "named": true
         },
         {
-          "type": "SwitchExpr",
+          "type": "prefix_expression",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "PtrIndexPayload",
+    "type": "parameter_declaration",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "IDENTIFIER",
+          "type": "basic_type",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "PtrPayload",
+    "type": "payload",
     "named": true,
     "fields": {},
     "children": {
@@ -2270,147 +1858,14 @@
       "required": true,
       "types": [
         {
-          "type": "IDENTIFIER",
+          "type": "identifier",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "PtrTypeStart",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "STRINGLITERAL",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "STRINGLITERALSINGLE",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "SliceTypeStart",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "StringList",
+    "type": "pointer_index_payload",
     "named": true,
     "fields": {},
     "children": {
@@ -2418,447 +1873,14 @@
       "required": true,
       "types": [
         {
-          "type": "STRINGLITERAL",
+          "type": "identifier",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "SuffixOp",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IDENTIFIER",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "SwitchCase",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "SwitchItem",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "SwitchExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "SwitchProngList",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "SwitchItem",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "SwitchProng",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AssignExpr",
-          "named": true
-        },
-        {
-          "type": "PtrPayload",
-          "named": true
-        },
-        {
-          "type": "SwitchCase",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "SwitchProngList",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "SwitchProng",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "TestDecl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "STRINGLITERALSINGLE",
-          "named": true
-        },
-        {
-          "type": "doc_comment",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "TopLevelComptime",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "BlockExpr",
-          "named": true
-        },
-        {
-          "type": "doc_comment",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "UnaryExpr",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "AsmExpr",
-            "named": true
-          },
-          {
-            "type": "BinaryExpr",
-            "named": true
-          },
-          {
-            "type": "Block",
-            "named": true
-          },
-          {
-            "type": "BlockLabel",
-            "named": true
-          },
-          {
-            "type": "BreakLabel",
-            "named": true
-          },
-          {
-            "type": "ErrorUnionExpr",
-            "named": true
-          },
-          {
-            "type": "IfExpr",
-            "named": true
-          },
-          {
-            "type": "InitList",
-            "named": true
-          },
-          {
-            "type": "LoopExpr",
-            "named": true
-          },
-          {
-            "type": "PrefixTypeOp",
-            "named": true
-          },
-          {
-            "type": "UnaryExpr",
-            "named": true
-          },
-          {
-            "type": "keyword",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "PrefixOp",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "VarDecl",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ByteAlign",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IDENTIFIER",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LinkSection",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "WhileContinueExpr",
+    "type": "pointer_payload",
     "named": true,
     "fields": {},
     "children": {
@@ -2866,230 +1888,109 @@
       "required": true,
       "types": [
         {
-          "type": "AssignExpr",
+          "type": "identifier",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "WhileExpr",
+    "type": "prefix_expression",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "Payload",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "function_call_expression",
           "named": true
         },
         {
-          "type": "WhilePrefix",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "WhilePrefix",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AsmExpr",
-          "named": true
-        },
-        {
-          "type": "BinaryExpr",
-          "named": true
-        },
-        {
-          "type": "Block",
-          "named": true
-        },
-        {
-          "type": "BlockLabel",
-          "named": true
-        },
-        {
-          "type": "BreakLabel",
-          "named": true
-        },
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "IfExpr",
-          "named": true
-        },
-        {
-          "type": "InitList",
-          "named": true
-        },
-        {
-          "type": "LoopExpr",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "PtrPayload",
-          "named": true
-        },
-        {
-          "type": "UnaryExpr",
-          "named": true
-        },
-        {
-          "type": "WhileContinueExpr",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "WhileStatement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "AssignExpr",
-          "named": true
-        },
-        {
-          "type": "BlockExpr",
-          "named": true
-        },
-        {
-          "type": "BlockExprStatement",
-          "named": true
-        },
-        {
-          "type": "IfStatement",
-          "named": true
-        },
-        {
-          "type": "LabeledStatement",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "SwitchExpr",
-          "named": true
-        },
-        {
-          "type": "VarDecl",
-          "named": true
-        },
-        {
-          "type": "WhilePrefix",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "WhileTypeExpr",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ErrorUnionExpr",
-          "named": true
-        },
-        {
-          "type": "Payload",
-          "named": true
-        },
-        {
-          "type": "PrefixTypeOp",
-          "named": true
-        },
-        {
-          "type": "WhilePrefix",
-          "named": true
-        },
-        {
-          "type": "keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "source_file",
+    "type": "root",
     "named": true,
     "fields": {},
     "children": {
@@ -3097,83 +1998,856 @@
       "required": false,
       "types": [
         {
-          "type": "AsmExpr",
+          "type": "container_field",
           "named": true
         },
         {
-          "type": "BinaryExpr",
+          "type": "test_declaration",
           "named": true
         },
         {
-          "type": "Block",
+          "type": "top_level_comptime",
           "named": true
         },
         {
-          "type": "BlockLabel",
+          "type": "top_level_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "BreakLabel",
+          "type": "variable_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "character_escape",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "suffix_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
           "named": true
         },
         {
-          "type": "ContainerField",
+          "type": "assignment_expression",
           "named": true
         },
         {
-          "type": "ErrorUnionExpr",
+          "type": "bit_shift_expression",
           "named": true
         },
         {
-          "type": "FnProto",
+          "type": "bitwise_expression",
           "named": true
         },
         {
-          "type": "IfExpr",
+          "type": "boolean_and_expression",
           "named": true
         },
         {
-          "type": "InitList",
+          "type": "boolean_literal",
           "named": true
         },
         {
-          "type": "LoopExpr",
+          "type": "boolean_or_expression",
           "named": true
         },
         {
-          "type": "PrefixTypeOp",
+          "type": "builtin_identifier",
           "named": true
         },
         {
-          "type": "STRINGLITERALSINGLE",
+          "type": "character_literal",
           "named": true
         },
         {
-          "type": "TestDecl",
+          "type": "comparison_expression",
           "named": true
         },
         {
-          "type": "TopLevelComptime",
+          "type": "float_literal",
           "named": true
         },
         {
-          "type": "UnaryExpr",
+          "type": "function_call_expression",
           "named": true
         },
         {
-          "type": "VarDecl",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "container_doc_comment",
+          "type": "init_list",
           "named": true
         },
         {
-          "type": "doc_comment",
+          "type": "integer_literal",
           "named": true
         },
         {
-          "type": "keyword",
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "suffix_operator",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "suffix_operator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "switch_case",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "switch_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "switch_item",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "switch_prong",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "pointer_payload",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "switch_case",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "test_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "character_escape",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "top_function_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "extern_ref",
+          "named": true
+        },
+        {
+          "type": "function_prototype",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "top_level_comptime",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "block_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "top_level_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "top_function_declaration",
+          "named": true
+        },
+        {
+          "type": "top_usingnamespace_declaration",
+          "named": true
+        },
+        {
+          "type": "top_variable_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "top_usingnamespace_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "top_variable_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "extern_ref",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "variable_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "basic_type",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "byte_align",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "link_section",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "while_continue_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         }
       ]
@@ -3208,6 +2882,10 @@
     "named": false
   },
   {
+    "type": "'",
+    "named": false
+  },
+  {
     "type": "(",
     "named": false
   },
@@ -3224,10 +2902,6 @@
     "named": false
   },
   {
-    "type": "*%=",
-    "named": false
-  },
-  {
     "type": "**",
     "named": false
   },
@@ -3241,10 +2915,6 @@
   },
   {
     "type": "+%",
-    "named": false
-  },
-  {
-    "type": "+%=",
     "named": false
   },
   {
@@ -3265,10 +2935,6 @@
   },
   {
     "type": "-%",
-    "named": false
-  },
-  {
-    "type": "-%=",
     "named": false
   },
   {
@@ -3364,39 +3030,7 @@
     "named": false
   },
   {
-    "type": "@",
-    "named": false
-  },
-  {
-    "type": "@\"",
-    "named": false
-  },
-  {
-    "type": "BuildinTypeExpr",
-    "named": true
-  },
-  {
-    "type": "CHAR_LITERAL",
-    "named": true
-  },
-  {
-    "type": "STRINGLITERALSINGLE",
-    "named": true
-  },
-  {
     "type": "[",
-    "named": false
-  },
-  {
-    "type": "\\",
-    "named": false
-  },
-  {
-    "type": "\\u{",
-    "named": false
-  },
-  {
-    "type": "\\x",
     "named": false
   },
   {
@@ -3412,31 +3046,283 @@
     "named": false
   },
   {
+    "type": "align",
+    "named": false
+  },
+  {
     "type": "and",
     "named": false
+  },
+  {
+    "type": "anyerror",
+    "named": false
+  },
+  {
+    "type": "anyframe",
+    "named": false
+  },
+  {
+    "type": "anytype",
+    "named": false
+  },
+  {
+    "type": "async",
+    "named": false
+  },
+  {
+    "type": "await",
+    "named": false
+  },
+  {
+    "type": "bool",
+    "named": false
+  },
+  {
+    "type": "builtin_identifier",
+    "named": true
   },
   {
     "type": "c",
     "named": false
   },
   {
-    "type": "container_doc_comment",
+    "type": "c_int",
+    "named": false
+  },
+  {
+    "type": "c_long",
+    "named": false
+  },
+  {
+    "type": "c_longdouble",
+    "named": false
+  },
+  {
+    "type": "c_longlong",
+    "named": false
+  },
+  {
+    "type": "c_short",
+    "named": false
+  },
+  {
+    "type": "c_uint",
+    "named": false
+  },
+  {
+    "type": "c_ulong",
+    "named": false
+  },
+  {
+    "type": "c_ulonglong",
+    "named": false
+  },
+  {
+    "type": "c_ushort",
+    "named": false
+  },
+  {
+    "type": "c_void",
+    "named": false
+  },
+  {
+    "type": "callconv",
+    "named": false
+  },
+  {
+    "type": "catch",
+    "named": false
+  },
+  {
+    "type": "comment",
     "named": true
   },
   {
-    "type": "doc_comment",
+    "type": "comptime",
+    "named": false
+  },
+  {
+    "type": "comptime_float",
+    "named": false
+  },
+  {
+    "type": "comptime_int",
+    "named": false
+  },
+  {
+    "type": "const",
+    "named": false
+  },
+  {
+    "type": "else",
+    "named": false
+  },
+  {
+    "type": "export",
+    "named": false
+  },
+  {
+    "type": "extern",
+    "named": false
+  },
+  {
+    "type": "f128",
+    "named": false
+  },
+  {
+    "type": "f16",
+    "named": false
+  },
+  {
+    "type": "f32",
+    "named": false
+  },
+  {
+    "type": "f64",
+    "named": false
+  },
+  {
+    "type": "false",
+    "named": false
+  },
+  {
+    "type": "fn",
+    "named": false
+  },
+  {
+    "type": "for",
+    "named": false
+  },
+  {
+    "type": "i128",
+    "named": false
+  },
+  {
+    "type": "i16",
+    "named": false
+  },
+  {
+    "type": "i32",
+    "named": false
+  },
+  {
+    "type": "i64",
+    "named": false
+  },
+  {
+    "type": "i8",
+    "named": false
+  },
+  {
+    "type": "identifier",
     "named": true
   },
   {
-    "type": "keyword",
-    "named": true
+    "type": "if",
+    "named": false
   },
   {
-    "type": "line_comment",
+    "type": "inline",
+    "named": false
+  },
+  {
+    "type": "isize",
+    "named": false
+  },
+  {
+    "type": "linksection",
+    "named": false
+  },
+  {
+    "type": "noalias",
+    "named": false
+  },
+  {
+    "type": "noinline",
+    "named": false
+  },
+  {
+    "type": "noreturn",
+    "named": false
+  },
+  {
+    "type": "null_literal",
     "named": true
   },
   {
     "type": "or",
+    "named": false
+  },
+  {
+    "type": "orelse",
+    "named": false
+  },
+  {
+    "type": "pub",
+    "named": false
+  },
+  {
+    "type": "test",
+    "named": false
+  },
+  {
+    "type": "threadlocal",
+    "named": false
+  },
+  {
+    "type": "true",
+    "named": false
+  },
+  {
+    "type": "try",
+    "named": false
+  },
+  {
+    "type": "type",
+    "named": false
+  },
+  {
+    "type": "u128",
+    "named": false
+  },
+  {
+    "type": "u16",
+    "named": false
+  },
+  {
+    "type": "u32",
+    "named": false
+  },
+  {
+    "type": "u64",
+    "named": false
+  },
+  {
+    "type": "u8",
+    "named": false
+  },
+  {
+    "type": "undefined_literal",
+    "named": true
+  },
+  {
+    "type": "usingnamespace",
+    "named": false
+  },
+  {
+    "type": "usize",
+    "named": false
+  },
+  {
+    "type": "var",
+    "named": false
+  },
+  {
+    "type": "void",
+    "named": false
+  },
+  {
+    "type": "while",
     "named": false
   },
   {

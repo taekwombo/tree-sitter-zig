@@ -1,16 +1,29 @@
-<div align="center">
-  <h1>Tree Sitter For Zig</h1>
-</div>
+tree-sitter-zig
+================
 
-<div align="center">
-  <p>
-    <a href="https://github.com/maxxnino/tree-sitter-zig">Zig's Tree Sitter</a>
-    based on
-    <a href="https://github.com/neovim/neovim/">Zig Spec</a> Official.
-  </p>
-</div>
+Zig grammar for [tree-sitter].
 
-The goal of `Zig's Tree Sitter` is to support the latest [Zig](https://ziglang.org/) with good syntax highlighting and more functionality.
+### Development
 
+Install the dependencies:
 
-![Demo](assets/demo.png)
+    npm install
+
+Run the tests:
+
+    npm run test
+
+Run the build and tests in watch mode:
+
+    npm run test:watch
+
+### Git Submodules
+
+* [zig-spec] - provides Zig file samples used to test this parser.
+
+#### References
+* [Zig Documentation]
+
+[tree-sitter]: https://github.com/tree-sitter/tree-sitter
+[zig-spec]: https://github.com/ziglang/zig-spec
+[Zig Documentation]: https://ziglang.org/documentation/master/
