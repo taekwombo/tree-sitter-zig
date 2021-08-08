@@ -225,7 +225,7 @@ module.exports = grammar({
             ),
             // $.if_statement,
             // $.labeled_statement,
-            // $.switch_expression,
+            $.switch_expression,
             seq(
                 $._expression,
                 ';',
@@ -259,6 +259,7 @@ module.exports = grammar({
             $.multiplication_expression,
             $.prefix_expression,
             $.suffix_expression,
+            $.switch_expression,
         ),
 
         /*
@@ -429,6 +430,20 @@ module.exports = grammar({
                 '.',
                 $.init_list,
             ),
+        ),
+
+
+        /*
+         * SwitchExpr <- KEYWORD_switch LPAREN Expr RPAREN LBRACE SwitchProngList RBRACE
+         */
+        switch_expression: $ => seq(
+            'switch',
+            '(',
+            $._expression,
+            ')',
+            '{',
+            $.switch_prong_list,
+            '}',
         ),
 
         /*
