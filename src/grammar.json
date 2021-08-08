@@ -531,7 +531,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "assignment_expression"
+              "name": "_expression"
             },
             {
               "type": "STRING",

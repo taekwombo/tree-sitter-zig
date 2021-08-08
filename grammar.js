@@ -101,7 +101,6 @@ module.exports = grammar({
          */
         top_level_comptime: $ => seq(
             'comptime',
-            // TODO naming
             $.block_expression,
         ),
 
@@ -158,7 +157,7 @@ module.exports = grammar({
             optional($.link_section),
             optional($.call_convention),
             optional('!'),
-            // TODO ranme into type expression
+            // TODO rename into type expression
             $.basic_type,
         ),
 
@@ -191,7 +190,7 @@ module.exports = grammar({
         container_field: $ => seq(
             optional('comptime'),
             $.identifier,
-            // TODO: : u8 -> extract into rule
+            // TODO: ": u8" extract into rule
             optional(seq(
                 ':',
                 // TODO: rename into type expression
@@ -226,7 +225,7 @@ module.exports = grammar({
             // $.labeled_statement,
             // $.switch_expression,
             seq(
-                $.assignment_expression,
+                $._expression,
                 ';',
             ),
         ),
@@ -462,7 +461,7 @@ module.exports = grammar({
         while_continue_expression: $ => seq(
             ':',
             '(',
-            // TODO: change to assignment_expression,
+            // TODO: change to assignment_expression (or not - needs confirmation)
             $._expression,
             ')',
         ),

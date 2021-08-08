@@ -2025,7 +2025,87 @@
       "required": true,
       "types": [
         {
+          "type": "addition_expression",
+          "named": true
+        },
+        {
           "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "bit_shift_expression",
+          "named": true
+        },
+        {
+          "type": "bitwise_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_and_expression",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_or_expression",
+          "named": true
+        },
+        {
+          "type": "builtin_identifier",
+          "named": true
+        },
+        {
+          "type": "character_literal",
+          "named": true
+        },
+        {
+          "type": "comparison_expression",
+          "named": true
+        },
+        {
+          "type": "float_literal",
+          "named": true
+        },
+        {
+          "type": "function_call_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "init_list",
+          "named": true
+        },
+        {
+          "type": "integer_literal",
+          "named": true
+        },
+        {
+          "type": "multiplication_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "prefix_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "suffix_expression",
+          "named": true
+        },
+        {
+          "type": "undefined_literal",
           "named": true
         },
         {
