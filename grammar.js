@@ -258,6 +258,7 @@ module.exports = grammar({
             $.addition_expression,
             $.multiplication_expression,
             $.prefix_expression,
+            $.block,
             $.suffix_expression,
             $.switch_expression,
         ),
