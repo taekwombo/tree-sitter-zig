@@ -259,6 +259,8 @@ module.exports = grammar({
             $.multiplication_expression,
             $.prefix_expression,
             $.block,
+            $.if_expression,
+            $.loop_expression,
             $.suffix_expression,
             $.switch_expression,
         ),
@@ -343,6 +345,77 @@ module.exports = grammar({
             $._expression,
         )),
 
+        // primary_expression: $ => (),
+
+        /*
+         * IfExpr <- IfPrefix Expr (KEYWORD_else Payload? Expr)?
+         */
+        if_expression: $ => prec.right(seq(
+            $.if_prefix,
+            $._expression,
+            optional(seq(
+                'else',
+                optional($.payload),
+                $._expression,
+            )),
+        )),
+
+        /*
+         * Block <- LBRACE Statement* RBRACE
+         */
+        block: $ => seq(
+            '{',
+                repeat($.statement),
+            '}',
+        ),
+
+        loop_expression: $ => seq(
+            optional('inline'),
+            choice(
+                $.for_expression,
+                $.while_expression,
+            ),
+        ),
+
+        for_expression: $ => prec.right(seq(
+            $.for_prefix,
+            $._expression,
+            optional(seq(
+                'else',
+                $._expression,
+            )),
+        )),
+
+        while_expression: $ => prec.right(seq(
+            $.while_prefix,
+            $._expression,
+            optional(seq(
+                'else',
+                optional($.payload),
+                $._expression,
+            )),
+        )),
+
+        // curly_suffix_expression: $ => (),
+
+        /*
+         * InitList
+         *     <- LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
+         *      / LBRACE Expr (COMMA Expr)* COMMA? RBRACE
+         *      / LBRACE RBRACE
+         */
+        init_list: $ => seq(
+            '{',
+            optional(choice(
+                commaSeparatedDangle($.field_init),
+                commaSeparatedDangle($._expression),
+            )),
+            '}',
+        ),
+
+        // type_expression: $ => (),
+        // error_union_expression: $ => (),
+
         /*
          * SuffixExpr
          *     <- KEYWORD_async PrimaryTypeExpr SuffixOp* FnCallArguments
@@ -372,30 +445,6 @@ module.exports = grammar({
             $._expression,
             $.function_call_arguments,
         )),
-
-        /*
-         * Block <- LBRACE Statement* RBRACE
-         */
-        block: $ => seq(
-            '{',
-                repeat($.statement),
-            '}',
-        ),
-
-        /*
-         * InitList
-         *     <- LBRACE FieldInit (COMMA FieldInit)* COMMA? RBRACE
-         *      / LBRACE Expr (COMMA Expr)* COMMA? RBRACE
-         *      / LBRACE RBRACE
-         */
-        init_list: $ => seq(
-            '{',
-            optional(choice(
-                commaSeparatedDangle($.field_init),
-                commaSeparatedDangle($._expression),
-            )),
-            '}',
-        ),
 
         /*
          * PrimaryTypeExpr
@@ -433,6 +482,14 @@ module.exports = grammar({
             ),
         ),
 
+        // container_declaration: $ => (),
+        // error_set_declaration: $ => (),
+        // grouped_expression: $ => (),
+        // if_type_expression: $ => (),
+        // labeled_type_expression: $ => (),
+        // loop_type_expression: $ => (),
+        // for_type_expression: $ => (),
+        // wihle_type_expression: $ => (),
 
         /*
          * SwitchExpr <- KEYWORD_switch LPAREN Expr RPAREN LBRACE SwitchProngList RBRACE
