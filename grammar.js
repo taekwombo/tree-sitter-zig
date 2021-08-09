@@ -842,6 +842,7 @@ module.exports = grammar({
         suffix_operator: $ => choice(
             seq(
                 '[',
+                $._expression,
                 optional(seq(
                     '..',
                     optional($._expression),
