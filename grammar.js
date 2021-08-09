@@ -28,9 +28,10 @@ module.exports = grammar({
 
     inline: $ => [
         $.container_members,
-        $.container_declarations,
-        // $.top_level_declaration,
+        $.declarations,
 
+        $.block_expression_statement,
+        $.labeled_statement,
         $.primary_expression,
 
         $.assignment_operator,
@@ -58,30 +59,15 @@ module.exports = grammar({
     ],
 
     rules: {
-        // TODO
-        root: $ => repeat($.container_members),
+        root: $ => repeat($.declarations),
 
-        /*
-         * ContainerMembers <- ContainerDeclarations (ContainerField COMMA)* (ContainerField / ContainerDeclarations)
-         */
-        container_members: $ => seq(
-            $.container_declarations,
-            repeat(seq(
-                $.container_field,
-                ',',
-            )),
-            choice(
-                $.container_field,
-                $.container_declarations,
-            ),
-        ),
         /*
          * ContainerDeclarations
          *     <- TestDecl ContainerDeclarations
          *      / TopLevelComptime ContainerDeclarations
          *      / doc_comment? KEYWORD_pub? TopLevelDecl ContainerDeclarations
          */
-        container_declarations: $ => choice(
+        declarations: $ => choice(
             $.test_declaration,
             $.top_level_comptime,
             seq(
@@ -89,6 +75,7 @@ module.exports = grammar({
                 $.top_level_declaration,
             ),
         ),
+
         /*
          * TestDecl <- doc_comment? KEYWORD_test STRINGLITERALSINGLE? Block
          */
@@ -117,6 +104,7 @@ module.exports = grammar({
             $.top_variable_declaration,
             $.top_usingnamespace_declaration,
         ),
+
         top_function_declaration: $ => seq(
             optional(choice(
                 'export',
@@ -132,6 +120,7 @@ module.exports = grammar({
                 $.block,
             ),
         ),
+
         top_variable_declaration: $ => seq(
             optional(choice(
                 'export',
@@ -140,6 +129,7 @@ module.exports = grammar({
             optional('threadlocal'),
             $.variable_declaration,
         ),
+
         top_usingnamespace_declaration: $ => seq(
             'usingnamespace',
             $._expression,
@@ -195,8 +185,11 @@ module.exports = grammar({
             // TODO: ": u8" extract into rule
             optional(seq(
                 ':',
-                // TODO: rename into type expression
-                $.basic_type,
+                choice(
+                    'anytype',
+                    // TODO: rename into type expression
+                    $.basic_type,
+                ),
                 optional($.byte_align),
             )),
             optional(seq(
@@ -223,20 +216,175 @@ module.exports = grammar({
                 optional('comptime'),
                 $.variable_declaration,
             ),
-            // $.if_statement,
-            // $.labeled_statement,
+            seq(
+                choice(
+                    'comptime',
+                    'nosuspend',
+                    'suspend',
+                    'defer',
+                ),
+                $.block_expression_statement,
+            ),
+            seq(
+                'errdefer',
+                optional($.payload),
+                $.block_expression_statement,
+            ),
+            $.if_statement,
+            $.labeled_statement,
             $.switch_expression,
+            $.jump_statement,
+            $.expression_statement,
+        )),
+
+        expression_statement: $ => seq(
+            $._expression,
+            ';',
+        ),
+
+        jump_statement: $ => choice(
+            seq(
+                'continue',
+                optional($.break_label),
+                ';',
+            ),
+            seq(
+                'return',
+                optional($._expression),
+                ';',
+            ),
+            seq(
+                'resume',
+                $._expression,
+                ';',
+            ),
+            seq(
+                'break',
+                optional($.break_label),
+                optional($._expression),
+                ';'
+            ),
+        ),
+
+        /*
+         * IfStatement
+         *     <- IfPrefix BlockExpr ( KEYWORD_else Payload? Statement )?
+         *      / IfPrefix AssignExpr ( SEMICOLON / KEYWORD_else Payload? Statement )
+         */
+        if_statement: $ => prec(PREC.STATEMENT, choice(
+            seq(
+                $.if_prefix,
+                $.block_expression,
+                optional(seq(
+                    'else',
+                    optional($.payload),
+                    $.statement,
+                )),
+            ),
+            seq(
+                $.if_prefix,
+                $._expression,
+                choice(
+                    ';',
+                    seq(
+                        'else',
+                        optional($.payload),
+                        $.statement,
+                    ),
+                ),
+            ),
+        )),
+
+        /*
+         * LabeledStatement <- BlockLabel? (Block / LoopStatement)
+         */
+        labeled_statement: $ => seq(
+            optional($.block_label),
+            choice(
+                $.block,
+                $.loop_statement,
+            ),
+        ),
+
+        /*
+         * LoopStatement <- KEYWORD_inline? (ForStatement / WhileStatement)
+         */
+        loop_statement: $ => seq(
+            optional('inline'),
+            choice(
+                $.for_statement,
+                $.while_statement,
+            ),
+        ),
+
+        /*
+         * ForStatement
+         *     <- ForPrefix BlockExpr ( KEYWORD_else Statement )?
+         *      / ForPrefix AssignExpr ( SEMICOLON / KEYWORD_else Statement )
+         */
+        for_statement: $ => prec(PREC.STATEMENT, choice(
+            seq(
+                $.for_prefix,
+                $.block_expression,
+                optional(seq(
+                    'else',
+                    $.statement,
+                )),
+            ),
+            seq(
+                $.for_prefix,
+                $._expression,
+                choice(
+                    ';',
+                    optional(seq(
+                        'else',
+                        $.statement,
+                    )),
+                ),
+            ),
+        )),
+
+        /*
+         * WhileStatement
+         *     <- WhilePrefix BlockExpr ( KEYWORD_else Payload? Statement )?
+         *      / WhilePrefix AssignExpr ( SEMICOLON / KEYWORD_else Payload? Statement )
+         */
+        while_statement: $ => prec(PREC.STATEMENT, choice(
+            seq(
+                $.while_prefix,
+                $.block_expression,
+                optional(seq(
+                    'else',
+                    optional($.payload),
+                    $.statement,
+                )),
+            ),
+            seq(
+                $.while_prefix,
+                $._expression,
+                choice(
+                    ';',
+                    seq(
+                        'else',
+                        optional($.payload),
+                        $.statement,
+                    ),
+                ),
+            ),
+        )),
+
+        /*
+         * BlockExprStatement
+         *     <- BlockExpr
+         *      / AssignExpr SEMICOLON
+         */
+        block_expression_statement: $ => choice(
+            $.block_expression,
             seq(
                 $._expression,
                 ';',
             ),
-        )),
-        // if_statement: $ => seq(
-        // labeled_statement: $ => seq(
-        // loop_statement: $ => seq(
-        // for_statement: $ => seq(
-        // while_statement: $ => seq(
-        // block_expression_statement: $ => seq(
+        ),
 
         /*
          * BlockExpr <- BlockLabel? Block
@@ -258,11 +406,13 @@ module.exports = grammar({
             $.addition_expression,
             $.multiplication_expression,
             $.prefix_expression,
-            $.block,
+            $.block_expression,
             $.if_expression,
-            $.loop_expression,
+            $.for_expression,
+            $.while_expression,
             $.suffix_expression,
             $.switch_expression,
+            $.grouped_expression,
         ),
 
         /*
@@ -369,15 +519,11 @@ module.exports = grammar({
             '}',
         ),
 
-        loop_expression: $ => seq(
-            optional('inline'),
-            choice(
-                $.for_expression,
-                $.while_expression,
-            ),
-        ),
-
+        /*
+         * ForExpr <- ForPrefix Expr (KEYWORD_else Expr)?
+         */
         for_expression: $ => prec.right(seq(
+            optional('inline'),
             $.for_prefix,
             $._expression,
             optional(seq(
@@ -386,7 +532,11 @@ module.exports = grammar({
             )),
         )),
 
+        /*
+         * WhileExpr <- WhilePrefix Expr (KEYWORD_else Payload? Expr)?
+         */
         while_expression: $ => prec.right(seq(
+            optional('inline'),
             $.while_prefix,
             $._expression,
             optional(seq(
@@ -476,6 +626,10 @@ module.exports = grammar({
             $.literal,
             $.identifier,
             $.builtin_identifier,
+            // TODO: Anonymous list literal
+            // Split init_list into anonymous struct and list literals.
+            // And move into literal.
+            // https://ziglang.org/documentation/master/#Anonymous-List-Literals
             seq(
                 '.',
                 $.init_list,
@@ -484,7 +638,16 @@ module.exports = grammar({
 
         // container_declaration: $ => (),
         // error_set_declaration: $ => (),
-        // grouped_expression: $ => (),
+
+        /*
+         * GroupedExpr <- LPAREN Expr RPAREN
+         */
+        grouped_expression: $ => seq(
+            '(',
+            $._expression,
+            ')',
+        ),
+
         // if_type_expression: $ => (),
         // labeled_type_expression: $ => (),
         // loop_type_expression: $ => (),
@@ -846,10 +1009,11 @@ module.exports = grammar({
                 optional(seq(
                     '..',
                     optional($._expression),
-                    optional(seq(
-                        ':',
-                        $._expression,
-                    )),
+                    // TODO: Figure out this section
+                    //optional(seq(
+                    //    ':',
+                    //    $._expression,
+                    //)),
                 )),
                 ']',
             ),
