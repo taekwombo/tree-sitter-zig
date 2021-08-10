@@ -13,9 +13,7 @@ const PREC = {
     ADDITION_EXPRESSION: 6,
     MULTIPLICATION_EXPRESSION: 7,
     PREFIX_EXPRESSION: 8,
-    _: 9,
-    __: 10,
-    SUFFIX_EXPRESSION: 11,
+    SUFFIX_EXPRESSION: 9,
 };
 
 module.exports = grammar({
