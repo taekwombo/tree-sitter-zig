@@ -1,0 +1,19 @@
+================================================================================
+Boolean Or Expression
+================================================================================
+
+test "expression" {
+    false or true;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (boolean_or_expression
+            (boolean_literal)
+            (boolean_literal)))))))
+

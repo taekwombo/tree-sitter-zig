@@ -1,0 +1,56 @@
+================================================================================
+Suffix Expression
+================================================================================
+
+test "expression" {
+    ptr.*;
+    val.?;
+    ident.member;
+    arr[index];
+    arr[2 - 2];
+    arr[2..];
+    arr[2..2];
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (suffix_expression
+            (identifier))))
+      (statement
+        (expression_statement
+          (suffix_expression
+            (identifier))))
+      (statement
+        (expression_statement
+          (suffix_expression
+            (identifier)
+            (identifier))))
+      (statement
+        (expression_statement
+          (suffix_expression
+            (identifier)
+            (identifier))))
+      (statement
+        (expression_statement
+          (suffix_expression
+            (identifier)
+            (addition_expression
+              (integer_literal)
+              (integer_literal)))))
+      (statement
+        (expression_statement
+          (suffix_expression
+            (identifier)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (suffix_expression
+            (identifier)
+            (integer_literal)
+            (integer_literal)))))))
+

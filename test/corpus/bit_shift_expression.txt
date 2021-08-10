@@ -1,0 +1,25 @@
+================================================================================
+Bit Shift Expression
+================================================================================
+
+test "expression" {
+    10 >> 2;
+    10 << 2;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (bit_shift_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (bit_shift_expression
+            (integer_literal)
+            (integer_literal)))))))
+

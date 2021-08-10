@@ -1,0 +1,48 @@
+================================================================================
+While Expression
+================================================================================
+
+test "expression" {
+    var i = begin;
+    return while (i < end) : (i += 1) {
+        if (i == number) {
+            break true;
+        }
+    } else false;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (identifier)))
+      (statement
+        (jump_statement
+          (while_expression
+            (while_prefix
+              (comparison_expression
+                (identifier)
+                (identifier))
+              (while_continue_expression
+                (assignment_expression
+                  (identifier)
+                  (integer_literal))))
+            (block_expression
+              (block
+                (statement
+                  (if_statement
+                    (if_prefix
+                      (comparison_expression
+                        (identifier)
+                        (identifier)))
+                    (block_expression
+                      (block
+                        (statement
+                          (jump_statement
+                            (boolean_literal)))))))))
+            (boolean_literal)))))))
+

@@ -1,0 +1,49 @@
+================================================================================
+Multiplication Expression
+================================================================================
+
+test "expression" {
+    1 * 1;
+    10 / 2;
+    a % b;
+    2 ** 10;
+    2 *% 5;
+    err || err;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (multiplication_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (multiplication_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (multiplication_expression
+            (identifier)
+            (identifier))))
+      (statement
+        (expression_statement
+          (multiplication_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (multiplication_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (multiplication_expression
+            (identifier)
+            (identifier)))))))
+

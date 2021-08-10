@@ -1,0 +1,49 @@
+================================================================================
+If Expression
+================================================================================
+
+test "expression" {
+    var v = if (bool) 1 else 2;
+    var v = if (bool) t: {
+        break :t true;
+    } else {
+        break :f false;
+    };
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (if_expression
+            (if_prefix
+              (identifier))
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (variable_declaration
+          (identifier)
+          (if_expression
+            (if_prefix
+              (identifier))
+            (block_expression
+              (block_label
+                (identifier))
+              (block
+                (statement
+                  (jump_statement
+                    (break_label
+                      (identifier))
+                    (boolean_literal)))))
+            (block_expression
+              (block
+                (statement
+                  (jump_statement
+                    (break_label
+                      (identifier))
+                    (boolean_literal)))))))))))
+

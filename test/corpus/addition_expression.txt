@@ -1,0 +1,43 @@
+================================================================================
+Addition Expression
+================================================================================
+
+test "expression" {
+    1 + 1;
+    10 - 2;
+    arr ++ arrb;
+    10 +% 10;
+    10 -% 10;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (addition_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (addition_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (addition_expression
+            (identifier)
+            (identifier))))
+      (statement
+        (expression_statement
+          (addition_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (addition_expression
+            (integer_literal)
+            (integer_literal)))))))
+

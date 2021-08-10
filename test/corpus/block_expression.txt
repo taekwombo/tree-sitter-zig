@@ -1,0 +1,28 @@
+================================================================================
+Block Expression
+================================================================================
+
+test "expression" {
+    var v = block_label: {
+        break :block_label 10;
+    };
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (block_expression
+            (block_label
+              (identifier))
+            (block
+              (statement
+                (jump_statement
+                  (break_label
+                    (identifier))
+                  (integer_literal))))))))))
+

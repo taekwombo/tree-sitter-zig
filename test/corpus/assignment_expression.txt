@@ -1,0 +1,26 @@
+================================================================================
+Assignment Expression
+================================================================================
+
+test "expression" {
+    stdout = stdout;
+    variable = &zig;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (assignment_expression
+            (identifier)
+            (identifier))))
+      (statement
+        (expression_statement
+          (assignment_expression
+            (identifier)
+            (prefix_expression
+              (identifier))))))))
+

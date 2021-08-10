@@ -1,0 +1,43 @@
+================================================================================
+For Expression
+================================================================================
+
+test "expression" {
+    const result = for (items) |value| {
+        sum += value.?;
+    } else blk: {
+        break :blk sum;
+    };
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (for_expression
+            (for_prefix
+              (identifier)
+              (pointer_index_payload
+                (identifier)))
+            (block_expression
+              (block
+                (statement
+                  (expression_statement
+                    (assignment_expression
+                      (identifier)
+                      (suffix_expression
+                        (identifier)))))))
+            (block_expression
+              (block_label
+                (identifier))
+              (block
+                (statement
+                  (jump_statement
+                    (break_label
+                      (identifier))
+                    (identifier)))))))))))
+

@@ -1,0 +1,242 @@
+================================================================================
+Literal - null, undefined, boolean
+================================================================================
+
+test "expression" {
+    var x = null;
+    var x = undefined;
+    var x = false;
+    var x = true;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (null_literal)))
+      (statement
+        (variable_declaration
+          (identifier)
+          (undefined_literal)))
+      (statement
+        (variable_declaration
+          (identifier)
+          (boolean_literal)))
+      (statement
+        (variable_declaration
+          (identifier)
+          (boolean_literal))))))
+
+================================================================================
+Literal - integer
+================================================================================
+
+test "expression" {
+    98222;
+    0xff;
+    0xFF;
+    0o755;
+    0b11110000;
+
+    1_000_000_000;
+    0b1_1111_1111;
+    0o7_5_5;
+    0xFF80_0000_0000_0000;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal)))
+      (statement
+        (expression_statement
+          (integer_literal))))))
+
+================================================================================
+Literal - float
+================================================================================
+
+test "expression" {
+    123.0E+77;
+    123.0;
+    123.0e+77;
+
+    0x103.70p-5;
+    0x103.70;
+    0x103.70P-5;
+
+    299_792_458.000_000;
+    0.000_000_001;
+    0x1234_5678.9ABC_CDEFp-10;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal)))
+      (statement
+        (expression_statement
+          (float_literal))))))
+
+================================================================================
+Literal - string
+================================================================================
+
+test "expression" {
+    "hello";
+    "h\x65llo";
+    "\xff";
+    "\xC2\xCF";
+    "\u{FF}";
+    "た";
+
+    \\#include <stdio.h>
+    \\
+    \\int main(int argc, char **argv) {
+    \\    printf("hello world\n");
+    \\    return 0;
+    ;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (string_literal)))
+      (statement
+        (expression_statement
+          (string_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (string_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (string_literal
+            (character_escape)
+            (character_escape))))
+      (statement
+        (expression_statement
+          (string_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (string_literal)))
+      (statement
+        (expression_statement
+          (string_literal))))))
+
+================================================================================
+Literal - char
+================================================================================
+
+test "expression" {
+    'a';
+    '\u{1f4a9}';
+    '\xFF';
+    '💯';
+    '\t';
+    '\n';
+    '\r';
+    '\'';
+    '\"';
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (character_literal)))
+      (statement
+        (expression_statement
+          (character_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (character_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (character_literal)))
+      (statement
+        (expression_statement
+          (character_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (character_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (character_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (character_literal
+            (character_escape))))
+      (statement
+        (expression_statement
+          (character_literal
+            (character_escape)))))))
+

@@ -1,0 +1,29 @@
+================================================================================
+Grouped Expression
+================================================================================
+
+test "expression" {
+    var x = (int() + int()) * int();
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (multiplication_expression
+            (grouped_expression
+              (addition_expression
+                (function_call_expression
+                  (identifier)
+                  (function_call_arguments))
+                (function_call_expression
+                  (identifier)
+                  (function_call_arguments))))
+            (function_call_expression
+              (identifier)
+              (function_call_arguments))))))))
+

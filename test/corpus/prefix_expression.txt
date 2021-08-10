@@ -1,0 +1,52 @@
+================================================================================
+Prefix Expression
+================================================================================
+
+test "expression" {
+    !true;
+    -10;
+    ~10;
+    -%10;
+    &ref;
+    try fail();
+    await future();
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (prefix_expression
+            (boolean_literal))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (identifier))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments)))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments))))))))
+

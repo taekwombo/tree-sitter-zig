@@ -1,0 +1,47 @@
+================================================================================
+Bitwise Expression
+================================================================================
+
+test "expression" {
+    1 & 1;
+    1 ^ 1;
+    1 | 1;
+    null orelse 1;
+    fn() catch |err| null;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (bitwise_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (bitwise_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (bitwise_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (bitwise_expression
+            (null_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (bitwise_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments))
+            (payload
+              (identifier))
+            (null_literal)))))))
+

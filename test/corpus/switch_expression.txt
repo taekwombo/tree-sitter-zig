@@ -1,0 +1,103 @@
+================================================================================
+Switch Expression
+================================================================================
+
+test "expression" {
+    var x = switch (v) {
+        1, 2, 3 => 0,
+        5...100 => 1,
+        101 => blk: {
+            const c: u64 = 5;
+            break :blk c * 2 + 1;
+        },
+        zz => zz,
+        blk: {
+            const d: u32 = 5;
+            const e: u32 = 100;
+            break :blk d + e;
+        } => 107,
+        else => 9,
+    };
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (variable_declaration
+          (identifier)
+          (switch_expression
+            (identifier)
+            (switch_prong
+              (switch_case
+                (switch_item
+                  (integer_literal))
+                (switch_item
+                  (integer_literal))
+                (switch_item
+                  (integer_literal)))
+              (integer_literal))
+            (switch_prong
+              (switch_case
+                (switch_item
+                  (integer_literal)
+                  (integer_literal)))
+              (integer_literal))
+            (switch_prong
+              (switch_case
+                (switch_item
+                  (integer_literal)))
+              (block_expression
+                (block_label
+                  (identifier))
+                (block
+                  (statement
+                    (variable_declaration
+                      (identifier)
+                      (basic_type)
+                      (integer_literal)))
+                  (statement
+                    (jump_statement
+                      (break_label
+                        (identifier))
+                      (addition_expression
+                        (multiplication_expression
+                          (identifier)
+                          (integer_literal))
+                        (integer_literal)))))))
+            (switch_prong
+              (switch_case
+                (switch_item
+                  (identifier)))
+              (identifier))
+            (switch_prong
+              (switch_case
+                (switch_item
+                  (block_expression
+                    (block_label
+                      (identifier))
+                    (block
+                      (statement
+                        (variable_declaration
+                          (identifier)
+                          (basic_type)
+                          (integer_literal)))
+                      (statement
+                        (variable_declaration
+                          (identifier)
+                          (basic_type)
+                          (integer_literal)))
+                      (statement
+                        (jump_statement
+                          (break_label
+                            (identifier))
+                          (addition_expression
+                            (identifier)
+                            (identifier))))))))
+              (integer_literal))
+            (switch_prong
+              (switch_case)
+              (integer_literal))))))))
+

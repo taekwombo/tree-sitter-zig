@@ -1,0 +1,19 @@
+================================================================================
+Boolean And Expression
+================================================================================
+
+test "expression" {
+    false and true;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (boolean_and_expression
+            (boolean_literal)
+            (boolean_literal)))))))
+

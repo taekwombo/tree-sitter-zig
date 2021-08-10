@@ -35,26 +35,23 @@ pub fn main() !void {
                   (suffix_expression
                     (suffix_expression
                       (identifier)
-                      (suffix_operator
-                        (identifier)))
-                    (suffix_operator
-                      (identifier)))
+                      (identifier))
+                    (identifier))
                   (function_call_arguments))
-                (suffix_operator
-                  (identifier)))
+                (identifier))
               (function_call_arguments))))
-        (ERROR
-          (prefix_expression
-            (function_call_expression
-              (suffix_expression
-                (identifier)
-                (suffix_operator
-                  (identifier)))
-              (function_call_arguments
-                (string_literal
-                  (character_escape))
-                (init_list
-                  (string_literal))))))))))
+        (statement
+          (expression_statement
+            (prefix_expression
+              (function_call_expression
+                (suffix_expression
+                  (identifier)
+                  (identifier))
+                (function_call_arguments
+                  (string_literal
+                    (character_escape))
+                  (init_list
+                    (string_literal)))))))))))
 
 ================================================================================
 Zig Documentation - Test #1
@@ -80,32 +77,34 @@ test "expect in release fast mode" {
 (root
   (test_declaration
     (block
-      (ERROR
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (suffix_expression
-                (identifier)
-                (suffix_operator
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (suffix_expression
+                  (identifier)
                   (identifier)))))))))
   (test_declaration
     (block))
   (test_declaration
     (block
-      (ERROR
-        (function_call_expression
-          (identifier)
-          (function_call_arguments
-            (boolean_literal))))))
-  (test_declaration
-    (block
-      (ERROR
-        (prefix_expression
+      (statement
+        (expression_statement
           (function_call_expression
             (identifier)
             (function_call_arguments
-              (boolean_literal))))))))
+              (boolean_literal)))))))
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (boolean_literal)))))))))
 
 ================================================================================
 Zig Documentation - Values #1
@@ -162,23 +161,24 @@ pub fn main() void {
               (float_literal)
               (float_literal))))
         (comment)
-        (ERROR
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (string_literal
-                (character_escape)
-                (character_escape)
-                (character_escape))
-              (init_list
-                (boolean_and_expression
-                  (boolean_literal)
-                  (boolean_literal))
-                (boolean_or_expression
-                  (boolean_literal)
-                  (boolean_literal))
-                (prefix_expression
-                  (boolean_literal))))))
+        (statement
+          (expression_statement
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (string_literal
+                  (character_escape)
+                  (character_escape)
+                  (character_escape))
+                (init_list
+                  (boolean_and_expression
+                    (boolean_literal)
+                    (boolean_literal))
+                  (boolean_or_expression
+                    (boolean_literal)
+                    (boolean_literal))
+                  (prefix_expression
+                    (boolean_literal)))))))
         (comment)
         (statement
           (variable_declaration
@@ -187,9 +187,10 @@ pub fn main() void {
             (basic_type)
             (null_literal)))
         (statement
-          (assignment_expression
-            (identifier)
-            (string_literal)))
+          (expression_statement
+            (assignment_expression
+              (identifier)
+              (string_literal))))
         (comment)
         (statement
           (variable_declaration
@@ -197,19 +198,18 @@ pub fn main() void {
             (basic_type)
             (MISSING ";")))
         (statement
-          (assignment_expression
-            (prefix_expression
-              (identifier))
-            (suffix_expression
-              (identifier)
-              (suffix_operator
+          (expression_statement
+            (assignment_expression
+              (prefix_expression
+                (identifier))
+              (suffix_expression
+                (identifier)
                 (identifier)))))
         (statement
-          (assignment_expression
-            (identifier)
-            (integer_literal))))))
-  (container_field
-    (MISSING identifier)))
+          (expression_statement
+            (assignment_expression
+              (identifier)
+              (integer_literal))))))))
 
 ================================================================================
 Zig Documentation - Values #2
@@ -237,100 +237,111 @@ test "string literals" {
         (variable_declaration
           (identifier)
           (string_literal)))
-      (ERROR
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (multiplication_expression
-                (function_call_expression
-                  (builtin_identifier)
-                  (function_call_arguments
-                    (identifier)))
-                (ERROR)
-                (suffix_expression
-                  (identifier)
-                  (suffix_operator
-                    (ERROR))))
-              (ERROR))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (comparison_expression
-                (suffix_expression
-                  (identifier)
-                  (suffix_operator
-                    (identifier)))
-                (integer_literal)))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (comparison_expression
-                (suffix_expression
-                  (identifier)
-                  (suffix_operator
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (multiplication_expression
+                  (function_call_expression
+                    (builtin_identifier)
+                    (function_call_arguments
+                      (identifier)))
+                  (ERROR)
+                  (suffix_expression
+                    (identifier)
+                    (integer_literal)
                     (ERROR)))
-                (character_literal)))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (comparison_expression
-                (suffix_expression
-                  (identifier)
-                  (suffix_operator
-                    (ERROR)))
-                (integer_literal)))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (comparison_expression
-                (character_literal)
-                (character_literal
-                  (character_escape))))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (comparison_expression
-                (character_literal
-                  (character_escape))
-                (integer_literal)))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (comparison_expression
-                (character_literal)
-                (integer_literal)))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (function_call_expression
-                (suffix_expression
-                  (identifier)
-                  (suffix_operator
-                    (identifier)))
-                (function_call_arguments
-                  (identifier)
-                  (string_literal)
-                  (string_literal
-                    (character_escape)))))))
-        (prefix_expression
-          (function_call_expression
-            (identifier)
-            (function_call_arguments
-              (comparison_expression
-                (suffix_expression
-                  (string_literal
+                (ERROR))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (comparison_expression
+                  (suffix_expression
+                    (identifier)
+                    (identifier))
+                  (integer_literal)))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (comparison_expression
+                  (suffix_expression
+                    (identifier)
+                    (integer_literal))
+                  (character_literal)))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (comparison_expression
+                  (suffix_expression
+                    (identifier)
+                    (integer_literal))
+                  (integer_literal)))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (comparison_expression
+                  (character_literal)
+                  (character_literal
+                    (character_escape))))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (comparison_expression
+                  (character_literal
                     (character_escape))
-                  (suffix_operator
-                    (ERROR)))
-                (integer_literal))))))
-      (comment)))
-  (container_field
-    (MISSING identifier)))
+                  (integer_literal)))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (comparison_expression
+                  (character_literal)
+                  (integer_literal)))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (function_call_expression
+                  (suffix_expression
+                    (identifier)
+                    (identifier))
+                  (function_call_arguments
+                    (identifier)
+                    (string_literal)
+                    (string_literal
+                      (character_escape)))))))))
+      (statement
+        (expression_statement
+          (prefix_expression
+            (function_call_expression
+              (identifier)
+              (function_call_arguments
+                (comparison_expression
+                  (suffix_expression
+                    (string_literal
+                      (character_escape))
+                    (integer_literal))
+                  (integer_literal)))))))
+      (comment))))
+

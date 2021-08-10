@@ -1,0 +1,49 @@
+================================================================================
+Comparison Expression
+================================================================================
+
+test "expression" {
+    10 == 10;
+    10 != 10;
+    10 < 10;
+    10 > 10;
+    10 <= 10;
+    10 >= 10;
+}
+
+--------------------------------------------------------------------------------
+
+(root
+  (test_declaration
+    (block
+      (statement
+        (expression_statement
+          (comparison_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (comparison_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (comparison_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (comparison_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (comparison_expression
+            (integer_literal)
+            (integer_literal))))
+      (statement
+        (expression_statement
+          (comparison_expression
+            (integer_literal)
+            (integer_literal)))))))
+
